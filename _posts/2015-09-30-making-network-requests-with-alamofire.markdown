@@ -317,7 +317,7 @@ Now we have the ability to make a request to a web server and receive a list of 
 
 
 
-An executable is worth a thousand words, so you can find a working example of the code on [Github][source-github]. The device will host a local test server so you can make network requests to a mocked Artilce API.
+An executable is worth a thousand words, so you can find a working example of the code on [Github][source-github]. The example code will host a local test server so you can make network requests to a mocked Artilce API.
 
 
 [carthage-github]: https://github.com/Carthage/Carthage
