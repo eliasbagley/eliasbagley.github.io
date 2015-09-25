@@ -309,9 +309,9 @@ class ViewController: UIViewController {
 
 {% endhighlight %}
 
-This view controller will initiate a network request when the view controller loads, and then print out the resulting list of objects to the console once the network requests completes.
+This `UIViewController` will initiate a network request when the view controller loads, and then print out the resulting list of objects to the console once the network requests completes.
 
-Now we have the ability to make a request to a web server and receive a list of objects back, as a list of `Article` objects that can be used in our app. The only difficulty with the current appraoch is that we have to keep a local copy of `Article` objects inside of the view controller, in order to present them in the UI of our app. This means that we need to cate care of all the data binding and syncing manually, which can be a pain. For example, if the user edits an object in a detail page, those changes will need to be sent back to the list in order to keep the list of data and detail view controller for that object in sync. We can prevent the need to have a local copy of the `Article` list in the view controller by first putting the `Articles` into Core Data, and using an `NSFetchedResultsController` to bind the data in core data to the UI. Stay tuned for the next article.
+Now we have the ability to make a request to a web server and receive a list of objects back, as a list of `Article` objects that can be used in our app. The only difficulty with the current approach is that we have to keep a local copy of `Article` objects inside of the view controller, in order to present them in the UI of our app. This means that we need to cate care of all the data binding and syncing manually, which can be a pain. For example, if the user edits an object in a detail page, those changes will need to be sent back to the list in order to keep the list of data and detail view controller for that object in sync. We can prevent the need to have a local copy of the `Article` list in the view controller by first putting the `Articles` into Core Data, and using an `NSFetchedResultsController` to bind the data in core data to the UI. Stay tuned for the next article.
 
 
 
