@@ -1,0 +1,8 @@
+new app
+add new module
+in my case, change app compat 22 to 21 to get it to build
+add files to module (you have to build module and app separately)
+
+  http://stackoverflow.com/questions/18656023/androidstudio-module-dependencies-in-gradle
+  in app.iml
+  +    <orderEntry type="module" module-name="take2" />
