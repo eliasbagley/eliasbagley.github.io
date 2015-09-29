@@ -2,7 +2,7 @@
 layout: post
 title:  "Launching Android Studio from the Terminal"
 date:   2015-09-29 13:35:00
-categories: Android AndroidStudio CommandLine Terminal
+categories: Android
 ---
 
 I've been frustrated with Android Studio's lack of a project file which can be quickly opened. When I'm starting the day workin on an iOS project, the first thing I do is [jump][jump-link] to the project's directory in the terminal, then type `open .xcwork<TAB><CR>`, and XCode will open the current project. With Android Studio, there isn't an obvious way to launch it from the terminal like that, since there is no project file that can be opened. First I have launch Android Studio, and then select the project I want from the GUI. Not a huge deal, but annoying enough that I wrote a script to launch the current directory's Android project from the command line
