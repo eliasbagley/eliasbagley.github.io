@@ -2,6 +2,7 @@
 layout: post
 title:  "Making Network Requests with Alamofire"
 date:   2015-09-25 23:22:15
+comments: true
 categories: JSON API Alamofire
 ---
 

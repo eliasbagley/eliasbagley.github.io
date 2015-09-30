@@ -2,6 +2,7 @@
 layout: post
 title:  "Launching Android Studio from the Terminal"
 date:   2015-09-29 13:35:00
+comments: true
 categories: Android
 ---
 
