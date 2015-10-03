@@ -344,6 +344,18 @@ We use the Activity's `LoaderManager` and a `CursorLoader` so that we don't read
 
 The `ContentProvider` in the `onCreateLoader` activity can be customized to provide filtering and sorting by passing in extra parameters. See the [`ContentProvider`][content-provider-doc-link] docs for more information.
 
+To get `ContentProvider` to work properly, you'll need the following in `AndroidManifest.xml`:
+
+{% highlight xml %}
+<application>
+    ...
+    <provider android:authorities="com.eliasbagley.cursorexample" android:exported="false" android:name="com.activeandroid.content.ContentProvider" />
+    ...
+</application>
+{% endhighlight %}
+
+Make sure to replace `com.eliasbagley.example` with your app's package.
+
 Great! Now anytime we save a new `Article` object into the database, the `CursorAdapter` will automatically display it in the `ListView`.
 
 In summary:
