@@ -17,7 +17,7 @@ A common paradigm in many Android applications is to load a list of objects from
 
 It probably looks something like this:
 
-MainActivity.java
+`MainActivity.java`
 
 {% highlight java %}
 
@@ -41,7 +41,7 @@ private void initialize() {
 
 {% endhighlight %}
 
-MyAdapter.java
+`MyAdapter.java`
 
 {% highlight java %}
 
@@ -60,11 +60,11 @@ public void setItems(List<Item> items) {
 
 This approach works, but it has a couple problems.
 
-1) The list isn't cached or persisted anywhere, so there will be a short delay after the activity loads before the data is shown
+1) The list isn't cached or persisted anywhere, so there will be a short delay after the activity loads before the data is shown<br>
 
-2) The list of items is passed around from the network layer, to the Activity, to the adapter. Keeping the data model in memory means that we have to manually keep this in memory data model in sync with the API. If we know that the server's data model has changed (for example, because we created or updated an object), then we need to make sure to sync with the API again, and again pass the List<Item> from the network layer to the Activity to the Adapter.
+2) The list of items is passed around from the network layer, to the Activity, to the adapter. Keeping the data model in memory means that we have to manually keep this in memory data model in sync with the API. If we know that the server's data model has changed (for example, because we created or updated an object), then we need to make sure to sync with the API again, and again pass the `List<Item>` from the network layer to the Activity to the Adapter.<br>
 
-3) If we want to paginate the list, we have to do this same thing every time we request a new page
+3) If we want to paginate the list, we have to do this same thing every time we request a new page<br>
 
 
 
@@ -82,9 +82,11 @@ In order to implement this data binding solution, we'll need to tie a couple pie
 
 Let's look at how the pieces fit together.
 
-I'm using [Retrofit][retrofit-link] for the network request, and [ActiveAndroid][active-android-link] for persistence. See the ActiveAndroid for instructions on how to set it up.
+I'm using [`Retrofit`][retrofit-link] for the network request, and [`ActiveAndroid`][active-android-link] for persistence. See the `ActiveAndroid` for instructions on how to set it up.
 
 First lets add a couple of dependencies to make our life easier:
+
+`build.gradle`
 
 {% highlight groovy %}
 compile 'com.google.code.gson:gson:2.2.+'
@@ -99,7 +101,7 @@ provided 'com.squareup.dagger:dagger-compiler:1.2.2'
 
 Next, we need a model to work with.
 
-Article.java
+`Article.java`
 
 {% highlight java %}
 
@@ -134,14 +136,14 @@ public class Article extends Model {
 
 {% endhighlight %}
 
-The @SerializedName annotations are for `GSON` to serialize the `JSON` to our `Article` object. The @Table and @Column annotations are for `ActiveAndroid`. Pretty self explanatory.
+The `@SerializedName` annotations are for `GSON` to serialize the `JSON` to our `Article` object. The `@Table` and `@Column` annotations are for `ActiveAndroid`. Pretty self explanatory.
 
 The `fromCursor(Cursor cursor)` method is what will allow our `CursorAdapter` to turn a Cursor into an instance of our `Article` object.
 
 
 Next, let's grab load a list of `Article` objects from out web server and store them in the database.
 
-ArticleAPI.java
+`ArticleAPI.java`
 
 {% highlight java %}
 
@@ -153,7 +155,7 @@ public interface ArticleAPI {
 {% endhighlight %}
 
 
-ArticleManager.java
+`ArticleManager.java`
 
 {% highlight java %}
 
@@ -194,12 +196,12 @@ class ArticlesServiceResponse {
 
 {% endhighlight %}
 
-I'm using [Dagger][dagger-link] to inject the ArticleAPI into the ArticleManager.
+I'm using [`Dagger`][dagger-link] to inject the ArticleAPI into the ArticleManager.
 
 
 Next, let's create a custom view which will be the cell in the ListView.
 
-ArticleCell.java
+`ArticleCell.java`
 
 {% highlight java %}
 
@@ -235,7 +237,7 @@ public class ArticleCell extends RelativeLayout {
 {% endhighlight %}
 
 
-cell_article.xml
+`cell_article.xml`
 
 {% highlight xml %}
 
@@ -261,7 +263,7 @@ The `populate(Article article)` method is what binds our Article model to the UI
 
 Next, our `CursorAdapter`
 
-ArticleAdapter.java
+`ArticleAdapter.java`
 
 {% highlight java %}
 
@@ -290,10 +292,9 @@ public class ArticleAdapter extends CursorAdapter {
 
 All we need is the two inherited constructors, and a `newView` method and `bindView method`. `newView` instantiates the view, and `bindView` creates an Article object from the Cursor, and then populates the `ArticleCell`. The `CursorAdapter` has the added benefit of handling the [ViewHolder][view-holder-link] pattern for us.
 
-
 Now let's tie it all together with the Activity:
 
-MainActivity.java
+`MainActivity.java`
 
 {% highlight java %}
 
@@ -343,7 +344,7 @@ We use the Activity's `LoaderManager` and a `CursorLoader` so that we don't read
 
 The `ContentProvider` in the `onCreateLoader` activity can be customized to provide filtering and sorting by passing in extra parameters. See the [`ContentProvider`][content-provider-doc-link] docs for more information.
 
-Great! Now anytime we save a new `Article` object into the database, the `CursorAdapter` will automatically display it in the ListView.
+Great! Now anytime we save a new `Article` object into the database, the `CursorAdapter` will automatically display it in the `ListView`.
 
 In summary:
 
@@ -351,10 +352,9 @@ In summary:
 2) Fetch a list of objects from the web service, and save into the database<br>
 3) Use a `CursorLoader` and `CursorAdapter` to bind the database to the UI<br>
 
+One nice thing that `UITableView` and `NSFetchedResultsController` can do that we don't currently have is insertion, deletion, and move animations. Stay tuned for part 2 where we will replace the `ListView` with the new [`RecyclerView`][recycler-view-link], which can support these animations.
 
-
-Once nice thing that `UITableView` and `NSFetchedResultsController` can do that we don't currently have is insertion, deletion, and move animations. Stay tuned for part 2 where we will replace the `ListView` with the new [`RecyclerView`][recycler-view-link], which can support these animations.
-
+You can find the source code for the examples [here][example-code-link].
 
 [retrofit-link]: https://github.com/square/retrofit
 [active-android-link]: https://github.com/pardom/ActiveAndroid
@@ -362,3 +362,4 @@ Once nice thing that `UITableView` and `NSFetchedResultsController` can do that 
 [content-provider-doc-link]: http://developer.android.com/reference/android/content/ContentProvider.html
 [view-holder-link]: http://developer.android.com/training/improving-layouts/smooth-scrolling.html#ViewHolder
 [recycler-view-link]: https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html
+[example-code-link]: https://github.com/eliasbagley/android-data-binding-1
