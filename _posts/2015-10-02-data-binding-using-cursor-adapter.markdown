@@ -86,7 +86,7 @@ I'm using [Retrofit][retrofit-link] for the network request, and [ActiveAndroid]
 
 First lets add a couple of dependencies to make our life easier:
 
-{% highlight gradle %}
+{% highlight groovy %}
 compile 'com.google.code.gson:gson:2.2.+'
 compile 'com.jakewharton:butterknife:5.1.+'
 compile 'com.squareup.dagger:dagger:1.2.2'
