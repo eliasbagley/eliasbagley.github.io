@@ -7,7 +7,7 @@ baseurl: ""
 url: "http://yourdomain.com" # the base hostname & protocol for your site
 twitter_username: eliasbagley
 github_username:  eliasbagley
-linkedin_username: elias-bagley
+#linkedin_username: elias-bagley
 
 # Build settings
 markdown: kramdown
