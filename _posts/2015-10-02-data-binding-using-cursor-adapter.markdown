@@ -24,7 +24,7 @@ It probably looks something like this:
 ...
 
 private void initialize() {
-  apiManger.fetchList(new Callback<List<Item>>() {
+  apiManager.fetchList(new Callback<List<Item>>() {
       @Override
       public void onSuccess(List<Item> items, Response response) {
         _adapter.setItems(items);
