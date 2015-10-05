@@ -63,7 +63,7 @@ This one isn't essential, but it's awesome. Kotlin is a JVM language replacement
 
 ## 12. [Anko][anko-link]<br>
 
-Another gem by JetBrains. If you're using Kotlin, Anko allows you to build user interfaces in code with a declarative DSL instead of XML.
+Another gem by JetBrains. If you're using Kotlin, Anko allows you to build user interfaces in code with a declarative DSL instead of XML, among other things.
 
 [otto-plugin-link]: https://github.com/square/otto-intellij-plugin
 [ideavim-plugin-link]: https://github.com/JetBrains/ideavim
