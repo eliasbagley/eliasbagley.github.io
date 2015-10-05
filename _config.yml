@@ -4,7 +4,7 @@ email: elias.bagley@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
     Advanced topics in iOS and Android development
 baseurl: ""
-url: "http://yourdomain.com" # the base hostname & protocol for your site
+url: "http://eliasbagley.github.io" # the base hostname & protocol for your site
 twitter_username: eliasbagley
 github_username:  eliasbagley
 #linkedin_username: elias-bagley
