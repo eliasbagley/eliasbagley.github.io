@@ -18,7 +18,7 @@ Make note of the repo name, publisher group id, and artifact name. You will plug
 
 Fill in any `FILL_IN` tags under Bintray Configuration to include the repository information you create in step 1. above.
 
-```
+```gradle
 def versionMajor = 1
 def versionMinor = 0
 def versionPatch = 0
