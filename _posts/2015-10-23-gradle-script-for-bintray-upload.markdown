@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Gradle Scripts for Uploading Android Artifacts to Bintray"
-date:   2015-10-04 12:00:00
+date:   2015-10-23 12:00:00
 comments: true
 categories: Android
 ---
@@ -189,3 +189,5 @@ export BINTRAY_GPG_PASSPHRASE=PASSWORD
 ```
 
 build.gradle will first read local.properties for the bintray information, and if it's not present, it will check the environment. If you want a CI build script to push to Bintray, then use the environment variables.
+
+[bintray-link]: https://bintray.com
