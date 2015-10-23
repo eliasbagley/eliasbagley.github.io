@@ -16,6 +16,21 @@ Make note of the repo name, publisher group id, and artifact name. You will plug
 
 #3. Add code to `build.gradle`.
 
+Add to dependencies block:
+
+```
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.3.1'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.2'
+        classpath 'com.github.dcendents:android-maven-plugin:1.2'
+    }
+}
+```
+
 Fill in any `FILL_IN` tags under Bintray Configuration to include the repository information you create in step 1. above.
 
 ```
@@ -195,5 +210,22 @@ export BINTRAY_GPG_PASSPHRASE=PASSWORD
 ```
 
 `build.gradle` will first read `local.properties` for the bintray information, and if it's not present, it will check the environment. If you want a CI build script to push to Bintray, then use the environment variables.
+
+#5. Setup CI (Optional)
+
+```bash
+# Fill this in with the path to your Android SDK. May not be necessary if this environment variable is already populated
+export ANDROID_HOME="/PATH/TO/ANDROID/HOME/DIRECTORY"
+export JAVA_HOME=$(/usr/libexec/java_home)
+
+export BINTRAY_APIKEY=FILL_IN
+export BINTRAY_USERNAME=FILL_IN
+export BINTRAY_GPG_PASSPHRASE=FILL_IN
+
+./gradlew install
+./gradlew bintrayUpload
+```
+
+Set it to read from the master branch, and to publish on pushes to this branch. Then, whenever you merge to master, an artifact with the same version specified in `build.gradle` will be published to JCenter. Please make sure that the version number is updated before you push to master, or else the upload will fail because Bintray rejects artifacts with duplicate names.
 
 [bintray-link]: https://bintray.com
