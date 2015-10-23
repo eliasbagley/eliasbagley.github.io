@@ -14,7 +14,7 @@ Follow the on screen instructions.
 
 Fill in the empty strings under Bintray Configuration to include the repository information you create in step 1. above
 
-{% highlight gradle %}
+{% highlight %}
 def versionMajor = 1
 def versionMinor = 0
 def versionPatch = 0
