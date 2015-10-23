@@ -10,7 +10,7 @@ categories: Android
 
 Follow the on screen instructions.
 
-#2. Add code to `build.gradle`.
+#2. Add code to build.gradle.
 
 Fill in the empty strings under Bintray Configuration to include the repository information you create in step 1. above
 
@@ -24,7 +24,9 @@ def versionBuild = 0
 
 def version_code = versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
 def version_name = "${versionMajor}.${versionMinor}.${versionPatch}"
+```
 
+```
 ////////////////////////
 // Bintray configuration
 ////////////////////////
