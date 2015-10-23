@@ -10,7 +10,7 @@ categories: Android
 
 Follow the on screen instructions.
 
-#2. Add code to build.gradle.
+#2. Add code to `build.gradle`.
 
 Fill in the empty strings under Bintray Configuration to include the repository information you create in step 1. above
 
@@ -188,6 +188,6 @@ export BINTRAY_USERNAME=USER
 export BINTRAY_GPG_PASSPHRASE=PASSWORD
 ```
 
-build.gradle will first read local.properties for the bintray information, and if it's not present, it will check the environment. If you want a CI build script to push to Bintray, then use the environment variables.
+`build.gradle` will first read `local.properties` for the bintray information, and if it's not present, it will check the environment. If you want a CI build script to push to Bintray, then use the environment variables.
 
 [bintray-link]: https://bintray.com
