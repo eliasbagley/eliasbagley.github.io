@@ -12,7 +12,7 @@ Follow the on screen instructions.
 
 #2. Add code to `build.gradle`.
 
-Fill in the empty strings under Bintray Configuration to include the repository information you create in step 1. above
+Fill in the empty strings under Bintray Configuration to include the repository information you create in step 1. above.
 
 ```
 def versionMajor = 1
