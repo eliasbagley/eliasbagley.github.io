@@ -12,7 +12,7 @@ Follow the on screen instructions.
 
 #2. Create a Bintray repository to host the artifact.
 
-Make note of teh repo name, publiser group id, and artifact name. You will plug these values into the script below.
+Make note of the repo name, publiser group id, and artifact name. You will plug these values into the script below.
 
 #2. Add code to `build.gradle`.
 
