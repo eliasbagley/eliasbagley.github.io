@@ -6,7 +6,7 @@ comments: true
 categories: Android
 ---
 
-First, set up Gradle for pushing to Bintray. See the instructions [here][bintray-setup-link]
+First, set up Gradle for pushing to Bintray. See my previous instructions [here][bintray-setup-link].
 
 Next, add the following to the bottom of `build.gradle`:
 
@@ -16,6 +16,8 @@ task('gitTag') {
     "git push --tags".execute([], project.rootDir)
 }
 ```
+
+Next, set this as the script to be run for CI:
 
 ```bash
 # Fill this in with the path to your Android SDK. May not be necessary if this environment variable is already populated
