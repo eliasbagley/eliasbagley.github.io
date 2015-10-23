@@ -6,9 +6,9 @@ comments: true
 categories: Android
 ---
 
-Set up Gradle for pushing to Bintray. See the instructions [here][bintray-setup-link]
+First, set up Gradle for pushing to Bintray. See the instructions [here][bintray-setup-link]
 
-Add the following to the bottom of `build.gradle`:
+Next, add the following to the bottom of `build.gradle`:
 
 ```
 task('gitTag') {
