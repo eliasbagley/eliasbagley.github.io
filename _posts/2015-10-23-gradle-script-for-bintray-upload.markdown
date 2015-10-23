@@ -14,7 +14,7 @@ Follow the on screen instructions.
 
 Make note of the repo name, publiser group id, and artifact name. You will plug these values into the script below.
 
-#2. Add code to `build.gradle`.
+#3. Add code to `build.gradle`.
 
 Fill in any `FILL_IN` tags under Bintray Configuration to include the repository information you create in step 1. above.
 
@@ -176,7 +176,9 @@ bintray {
 }
 ```
 
-Then, you can keep configuration info in `local.properties`. Replace the placeholders with the real values.
+#4. Add Keys
+
+You can keep configuration info in `local.properties`. Replace the placeholders with the real values.
 
 ```
 bintray.apikey=KEY
