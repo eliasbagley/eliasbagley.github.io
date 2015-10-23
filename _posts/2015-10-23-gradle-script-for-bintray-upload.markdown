@@ -14,7 +14,7 @@ Follow the on screen instructions.
 
 Fill in the empty strings under Bintray Configuration to include the repository information you create in step 1. above
 
-```gradle
+```
 def versionMajor = 1
 def versionMinor = 0
 def versionPatch = 0
@@ -174,7 +174,7 @@ bintray {
 
 Then, you can keep configuration info in `local.properties`
 
-```ini
+```
 bintray.apikey=KEY
 bintray.user=USER
 bintray.gpg.password=PASSWORD
