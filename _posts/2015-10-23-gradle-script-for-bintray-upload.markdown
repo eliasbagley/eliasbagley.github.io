@@ -33,7 +33,7 @@ buildscript {
 
 Fill in any `FILL_IN` tags under Bintray Configuration to include the repository information you create in step 1. above.
 
-```
+```groovy
 def versionMajor = 1
 def versionMinor = 0
 def versionPatch = 0
