@@ -6,14 +6,16 @@ comments: true
 categories: Android
 ---
 
-#1. Create a [Bintray][bintray-link] account and repository
+#1. Create a [Bintray][bintray-link] account and repository.
+
+Follow the on screen instructions.
 
 #2. Add code to `build.gradle`.
 
 Fill in the empty strings under Bintray Configuration to include the repository information you create in step 1. above
 
 
-```gradle
+```
 // Manifest version information!
 def versionMajor = 1
 def versionMinor = 0
