@@ -14,9 +14,7 @@ Follow the on screen instructions.
 
 Fill in the empty strings under Bintray Configuration to include the repository information you create in step 1. above
 
-
-```
-// Manifest version information!
+{% highlight gradle %}
 def versionMajor = 1
 def versionMinor = 0
 def versionPatch = 0
@@ -24,9 +22,7 @@ def versionBuild = 0
 
 def version_code = versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
 def version_name = "${versionMajor}.${versionMinor}.${versionPatch}"
-```
 
-```
 ////////////////////////
 // Bintray configuration
 ////////////////////////
@@ -174,23 +170,23 @@ bintray {
         }
     }
 }
-```
+{% endhighlight %}
 
 Then, you can keep configuration info in `local.properties`
 
-```ini
+{% highlight ini %}
 bintray.apikey=KEY
 bintray.user=USER
 bintray.gpg.password=PASSWORD
-```
+{% endhighlight %}
 
 Or, in a `.env` file:
 
-```ini
+{% highlight ini %}
 export BINTRAY_APIKEY=KEY
 export BINTRAY_USERNAME=USER
 export BINTRAY_GPG_PASSPHRASE=PASSWORD
-```
+{% endhighlight %}
 
 build.gradle will first read local.properties for the bintray information, and if it's not present, it will check the environment. If you want a CI build script to push to Bintray, then use the environment variables.
 
