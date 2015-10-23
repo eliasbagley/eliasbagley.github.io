@@ -10,9 +10,13 @@ categories: Android
 
 Follow the on screen instructions.
 
+#2. Create a Bintray repository to host the artifact.
+
+Make note of teh repo name, publiser group id, and artifact name. You will plug these values into the script below.
+
 #2. Add code to `build.gradle`.
 
-Fill in the empty strings under Bintray Configuration to include the repository information you create in step 1. above.
+Fill in any `FILL_IN` tags under Bintray Configuration to include the repository information you create in step 1. above.
 
 ```
 def versionMajor = 1
@@ -28,23 +32,23 @@ def version_name = "${versionMajor}.${versionMinor}.${versionPatch}"
 ////////////////////////
 
 ext {
-    bintrayRepo = ''
-    bintrayName = ''
+    bintrayRepo = FILL_IN
+    bintrayName = FILL_IN
 
-    publishedGroupId = ''
-    libraryName = ''
-    artifact = ''
+    publishedGroupId = FILL_IN
+    libraryName = FILL_IN
+    artifact = FILL_IN
 
-    libraryDescription = ''
+    libraryDescription = FILL_IN
 
-    siteUrl = ''
-    gitUrl = ''
+    siteUrl = FILL_IN
+    gitUrl = FILL_IN
 
     libraryVersion = version_name
 
-    developerId = ''
-    developerName = ''
-    developerEmail = ''
+    developerId = FILL_IN
+    developerName = FILL_IN
+    developerEmail = FILL_IN
 
     licenseName = 'The Apache Software License, Version 2.0'
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
@@ -172,7 +176,7 @@ bintray {
 }
 ```
 
-Then, you can keep configuration info in `local.properties`
+Then, you can keep configuration info in `local.properties`. Replace the placeholders with the real values.
 
 ```
 bintray.apikey=KEY
