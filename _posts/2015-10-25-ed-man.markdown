@@ -1,9 +1,9 @@
 ---
 layout: post
 title:  "Ed, man! ED IS THE STANDARD TEXT EDITOR"
-date:   2015-09-25 23:22:15
+date:   2015-10-25 12:00:00
 comments: true
-categories: JSON API Alamofire
+categories: editors
 ---
 
 I spent a bit of time today playing around with the text editor ed, the grandfather to vim, and wow is it tricky to use!  Since it's a line editor, there's no cursor, so you have to issue it commands to move lines, and then it prints out the line in the editor, rather than updating the screen in place (which is how vim got it's name VIsual editor). You can then switch between command mode and insert mode, and in insert mode you can give a command like `a` to start appending lines, etc. If you want to edit a line, you have to do it through regular expressions which operate on a single line (since there's no cursor to move left/right across the line). All errors are reported as a single '?' (unless you ask the editor for more details). This was presumably to save time and space when programming was done on teletypes. I'm really curious what it would feel like to write code on one of those old teletypes using ed, with each line printing on on a piece of paper next to you. It makes you really appreciate the tools we have compared to 30 years ago. (edited)
