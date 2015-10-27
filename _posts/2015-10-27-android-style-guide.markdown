@@ -287,3 +287,5 @@ public String myString;
 # TODO structure of build.gradle
 
 # Use github pull requests for workflow/code reviews. Use hub to do this from the command line.
+
+# Feel free to use Kotlin for a util class. Keep code that interacts heavily with Android in Java for now.
