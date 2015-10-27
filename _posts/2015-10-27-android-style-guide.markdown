@@ -147,6 +147,7 @@ public static void main(String[] args) {
 # Reference all custom colors from a colors.xml class. Don't hard code colors into XML
 
 _colors.xml_
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
@@ -163,6 +164,7 @@ example:
 
 
 _dimens.xml_
+
 ```xml
 <resources>
     <dimen name="action_bar_text_size">20sp</dimen>
@@ -273,6 +275,7 @@ public String getMyString() {
 ```
 
 no:
+
 ```java
 public String myString;
 ```
