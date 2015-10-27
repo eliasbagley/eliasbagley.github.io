@@ -12,6 +12,8 @@ Note: This guide is a work in progress.
 
 # public static final int CONSTANTS\_SHOULD\_BE\_IN\_SHOUTING\_SNAKE\_CASE = 42
 
+# Put constants into a Constants.java class
+
 # Align fields and variables into columns
 
 In Android Studio, navigate to:
