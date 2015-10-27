@@ -8,6 +8,10 @@ categories: android
 
 Note: This guide is a work in progress.
 
+# use camelCase
+
+# public static final int CONSTANTS_SHOULD_BE_IN_SHOUTING_SNAKE_CASE = 42
+
 # Align fields and variables into columns
 
 In Android Studio, navigate to:
