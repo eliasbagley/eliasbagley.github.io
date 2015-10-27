@@ -280,4 +280,8 @@ no:
 public String myString;
 ```
 
+# TODO .staging, .debug etc
 
+# TODO structure of build.gradle
+
+# Use github pull requests for workflow/code reviews. Use hub to do this from the command line.
