@@ -10,7 +10,7 @@ Note: This guide is a work in progress.
 
 # use camelCase
 
-# public static final int CONSTANTS_SHOULD_BE_IN_SHOUTING_SNAKE_CASE = 42
+# public static final int CONSTANTS\_SHOULD\_BE\_IN\_SHOUTING\_SNAKE\_CASE = 42
 
 # Align fields and variables into columns
 
