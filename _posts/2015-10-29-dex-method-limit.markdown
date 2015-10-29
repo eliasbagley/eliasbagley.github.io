@@ -6,7 +6,7 @@ comments: true
 categories: Android
 ---
 
-Google has officially addressed teh 65k method limit in Android 5, and has included a support library for earlier platforms.
+Google has officially addressed the 65k method limit in Android 5, and has included a support library for earlier platforms.
 
 #1. Add multiDexEnabled = true in build.gradle
 
@@ -15,6 +15,7 @@ android {
     defaultConfig {
         multiDexEnabled = true
     }
+}
 ```
 
 #2. Add multidex library in build.gradle
