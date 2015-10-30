@@ -289,3 +289,15 @@ public String myString;
 # Use github pull requests for workflow/code reviews. Use hub to do this from the command line.
 
 # Feel free to use Kotlin for a util class. Keep code that interacts heavily with Android in Java for now.
+
+# Put @Inject, @InjectView annotations on the same line
+
+# When ButterKnife @InjectView isn't available (Like in Android library projects) use ButterKnife's `findById` method instead
+
+yes:
+import static butterknife.ButterKnife.findById;
+
+_myButton = findById(this, R.id.my_button);
+
+no:
+_myButton = (Button)findViewById(R.id.my_button)
