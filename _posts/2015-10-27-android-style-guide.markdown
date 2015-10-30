@@ -314,6 +314,38 @@ _myButton = (Button)findViewById(R.id.my_button)
 
 # Use editor config (enabled by default in Android Studio.. just don't turn it off)
 
-# Set field annotations to `do not wrap`
+# Field annotations should not wrap. Change in Android Setudio settings: set field annotations to `do not wrap`
+
+yes:
+```java
+class MyClass {
+  @Inject Manager _myManager;
+}
+
+```
+
+no:
+```java
+class MyClass {
+  @Inject
+  Manager _myManager;
+}
+```
+
+# Method annotations should wrap (Android Studio Default)
+
+yes:
+
+```java
+@Override
+public void myMethod() {
+}
+  ```
+
+no:
+```java
+@Override public void myMethod() {
+}
+```
 
 `Preferences -> Editor -> Code Style -> Java -> Wrapping and Braces tab -> Field Annotations`
