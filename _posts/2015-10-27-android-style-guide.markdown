@@ -356,3 +356,7 @@ no:
 _googleButton = findById(this, R.id.google_button);
 ```
 
+
+# Instead of using IntroActivity.this in an anonymous inner class, use getActivity() (put this method in a superclass)
+
+ This makes the code easily portable across activities
