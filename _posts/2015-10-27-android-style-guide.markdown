@@ -129,7 +129,7 @@ layout_main_activity.xml
 
 Android only has a single resources folder, and subfolers aren't allowed. Naming them this way visually groups related xml files together.
 
-# Add the Debug Drawer
+# Add the Debug Drawer for every project
 
 # Retrofit API interfaces in a separate class
 
@@ -305,3 +305,7 @@ _myButton = (Button)findViewById(R.id.my_button)
 # Don't litter activities with intent code. Have each activity instead present a public static show(Activity activity) method
 
 # Use `Snackbar` instead of `Toast`
+
+# Use `CoordinatorLayout` instead of `FrameLayout`
+
+# Use `dp` for dimentions, and `sp` for fonts
