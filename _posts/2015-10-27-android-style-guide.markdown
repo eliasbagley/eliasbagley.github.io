@@ -303,3 +303,5 @@ no:
 _myButton = (Button)findViewById(R.id.my_button)
 
 # Don't litter activities with intent code. Have each activity instead present a public static show(Activity activity) method
+
+# Use `Snackbar` instead of `Toast`
