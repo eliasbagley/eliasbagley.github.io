@@ -309,3 +309,5 @@ _myButton = (Button)findViewById(R.id.my_button)
 # Use `CoordinatorLayout` instead of `FrameLayout`
 
 # Use `dp` for dimentions, and `sp` for fonts
+
+# Include layouts in xml from a single place, rather than duplciating the code across two different layout files
