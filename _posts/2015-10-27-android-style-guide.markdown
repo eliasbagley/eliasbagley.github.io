@@ -359,4 +359,16 @@ _googleButton = findById(this, R.id.google_button);
 
 # Instead of using IntroActivity.this in an anonymous inner class, use getActivity() (put this method in a superclass)
 
- This makes the code easily portable across activities
+This makes the code easily portable across activities
+
+# Colors in colors.xml should be uppercase
+
+<color name="colorPrimary">#FF9B00</color>      <!-- Main Toolbar color -->
+
+# Use a color pallete, not a new color for everything.
+
+It's a code smell to have dozens of colors in colors.xml!
+
+# Have a "layout/spacing pallete" button spacing, margins, etc
+
+Be consistent layout margins, button heights, font sizes, etc
