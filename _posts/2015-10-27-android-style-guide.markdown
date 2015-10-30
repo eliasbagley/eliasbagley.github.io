@@ -311,3 +311,9 @@ _myButton = (Button)findViewById(R.id.my_button)
 # Use `dp` for dimentions, and `sp` for fonts
 
 # Include layouts in xml from a single place, rather than duplciating the code across two different layout files
+
+# Use editor config (enabled by default in Android Studio.. just don't turn it off)
+
+# Set field annotations to `do not wrap`
+
+`Preferences -> Editor -> Code Style -> Java -> Wrapping and Braces tab -> Field Annotations`
