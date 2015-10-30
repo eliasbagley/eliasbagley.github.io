@@ -314,6 +314,8 @@ _myButton = (Button)findViewById(R.id.my_button)
 
 # Use editor config (enabled by default in Android Studio.. just don't turn it off)
 
+TODO: paste a cample editor config to use for android projects
+
 # Field annotations should not wrap. Change in Android Setudio settings: set field annotations to `do not wrap`
 
 yes:
