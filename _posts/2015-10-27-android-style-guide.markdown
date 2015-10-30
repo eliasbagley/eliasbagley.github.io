@@ -349,3 +349,10 @@ no:
 ```
 
 `Preferences -> Editor -> Code Style -> Java -> Wrapping and Braces tab -> Field Annotations`
+
+# Consistent id names and variable names. snake_case id names to camelCase variable names
+
+```java
+_googleButton = findById(this, R.id.google_button);
+```
+
