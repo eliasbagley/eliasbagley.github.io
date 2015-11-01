@@ -377,6 +377,16 @@ Be consistent layout margins, button heights, font sizes, etc
 
 # Use `match_parent` instead of `fill_parent` in layouts
 
-They do the same thing, but `match_parent` is the new version, `fill_parents` has been deprecated.
+They do the same thing, but `match_parent` is the new version, `fill_parent` has been deprecated.
 
 # Break up the res/layouts folder into multiple layouts
+
+# For gradle, avoid using + to specify version in the dependencies block. Use exact version numbers instead.
+
+Using + can lead to build reproducibility problems down the road.
+
+yes:
+`compile 'com.google.code.gson:gson:2.2.3'`
+
+no:
+`compile 'com.google.code.gson:gson:2.2.+'`
