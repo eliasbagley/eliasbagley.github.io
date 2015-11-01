@@ -390,3 +390,22 @@ yes:
 
 no:
 `compile 'com.google.code.gson:gson:2.2.+'`
+
+# Project Guidelines
+
+# Use Android Studio's default package and folder structure
+
+Put code into a release/ subfolder if it will only ever be used for release
+Put code into a debug/ subfolder if it will ever only be used for debug builds
+Everything else goes in the main subfolder
+Release mode can override classes in the main folder. Do this if you have classes with methods that will change depending on which build flavor you're using
+
+
+# You can override classes by
+
+
+# TODO: Naming convention for layouts, drawables, icons
+
+# TODO: Don't swallow exceptions
+
+# TODO: Class member ordering (constants, fields, constructors, override methods and callbacks, public public methods, privaet methods, inner classes or interfaces
