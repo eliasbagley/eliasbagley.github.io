@@ -409,3 +409,37 @@ Release mode can override classes in the main folder. Do this if you have classe
 # TODO: Don't swallow exceptions
 
 # TODO: Class member ordering (constants, fields, constructors, override methods and callbacks, public public methods, privaet methods, inner classes or interfaces
+
+# Use //region description to mark the beginning of a local section of code. Use //endregion to close it.
+
+Android Studio understands these tags to be able to collapse sections of the file
+
+
+# Have order of Android Acitivty callbacks match the lifecycle
+
+```java
+public class MainActivity extends Activity {
+
+    //Order matches Activity lifecycle
+    @Override
+    public void onCreate() {}
+
+    @Override
+    public void onStart() {}
+
+    @Override
+    public void onStop() {}
+
+    @Override
+    public void onResume() {}
+
+    @Override
+    public void onPause() {}
+
+    @Override
+    public void onDestory() {}
+
+}
+```
+
+# Provide a private construtor for non-instantiable Util classes, so they don't generate a default constructor
