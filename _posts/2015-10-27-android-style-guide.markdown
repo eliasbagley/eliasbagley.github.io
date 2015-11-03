@@ -443,3 +443,11 @@ public class MainActivity extends Activity {
 ```
 
 # Provide a private construtor for non-instantiable Util classes, so they don't generate a default constructor
+
+# BUILD / GRADLE SECTION
+
+# Set the app's version in `build.gradle`, NOT in `AndroidManifest.xml`
+
+Put the version information right at the top of the file
+
+# Put `dependency{}` and `compile` statements in the module build.config, NOT in the top level project build.config
