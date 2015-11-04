@@ -444,6 +444,16 @@ public class MainActivity extends Activity {
 
 # Provide a private construtor for non-instantiable Util classes, so they don't generate a default constructor
 
+# Use type inference for generics
+
+yes:
+
+`List<Integer> list = new ArrayList<>();`
+
+no:
+
+`List<Integer> list = new ArrayList<Integer>();`
+
 # BUILD / GRADLE SECTION
 
 # Set the app's version in `build.gradle`, NOT in `AndroidManifest.xml`
@@ -451,3 +461,7 @@ public class MainActivity extends Activity {
 Put the version information right at the top of the file
 
 # Put `dependency{}` and `compile` statements in the module build.config, NOT in the top level project build.config
+
+# RELEASE SECTION
+
+Put keystore information in a keystore.properties file and read the property file at buildtime
