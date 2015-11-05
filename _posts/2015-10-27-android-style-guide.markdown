@@ -8,6 +8,14 @@ categories: android
 
 Note: This guide is a work in progress.
 
+# Android Studio
+
+Recommended plugins: TODO
+
+## Always keep Android Studio up to date
+
+
+
 # use camelCase
 
 # public static final int CONSTANTS\_SHOULD\_BE\_IN\_SHOUTING\_SNAKE\_CASE = 42
