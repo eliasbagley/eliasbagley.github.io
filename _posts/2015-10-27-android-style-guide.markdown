@@ -464,6 +464,17 @@ no:
 
 # BUILD / GRADLE SECTION
 
+# Use build type strings to define the user-visble project name
+
+```
+  src
+    ├── debug
+    │   └── res
+    │       └── buildtype_strings.xml
+    └── release
+      └── res
+            └── buildtype_strings.xml``
+
 # Set the app's version in `build.gradle`, NOT in `AndroidManifest.xml`
 
 Put the version information right at the top of the file
