@@ -473,7 +473,8 @@ no:
     │       └── buildtype_strings.xml
     └── release
       └── res
-            └── buildtype_strings.xml``
+            └── buildtype_strings.xml
+```
 
 # Set the app's version in `build.gradle`, NOT in `AndroidManifest.xml`
 
@@ -484,3 +485,4 @@ Put the version information right at the top of the file
 # RELEASE SECTION
 
 Put keystore information in a keystore.properties file and read the property file at buildtime
+
