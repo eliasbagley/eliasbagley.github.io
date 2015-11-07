@@ -466,6 +466,8 @@ no:
 
 # Use build type strings to define the user-visble project name
 
+TODO: or do this in the build.gradle buildTypes like in Fortify?
+
 ```
   src
     ├── debug
@@ -486,3 +488,23 @@ Put the version information right at the top of the file
 
 Put keystore information in a keystore.properties file and read the property file at buildtime
 
+# JAVA SECTION
+
+Parameter ordering - if a `Context` object is being passed in, it comes first.
+if a `Callback` object is being passed in, it comes last.
+
+yes:
+
+```java
+public void getUser(Context context, Callback<User> callback) {
+  ...
+}
+```
+
+# Don't suffix model names with Model
+
+yes:
+`User user = new User();`
+
+no:
+`UserModel user = new UserModel();`
