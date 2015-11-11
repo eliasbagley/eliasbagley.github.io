@@ -510,3 +510,5 @@ no:
 `UserModel user = new UserModel();`
 
 # Use styles.xml rather than specifying lots of duplicated attributes in xml files
+
+# Use retrolambda and lambda syntax for single method interfaces
