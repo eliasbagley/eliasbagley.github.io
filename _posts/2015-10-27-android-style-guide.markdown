@@ -8,6 +8,22 @@ categories: android
 
 Note: This guide is a work in progress.
 
+## Android Studio
+
+
+## Android Studio Plugins
+
+
+## Java Style
+
+
+## Naming Conventions
+
+
+
+
+
+
 # Android Studio
 
 Recommended plugins: TODO
