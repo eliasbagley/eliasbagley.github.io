@@ -14,6 +14,10 @@ Note: This guide is a work in progress.
 
 ## Android Studio Plugins
 
+Suggestion: Hide the navigation bar (You can access with CMD + Up arrow. Use this context to create new files with CMD + N). `View -> Uncheck navigation bar etc`
+Suggestion: Hide the tabs (Double tap shift for search instead of relying on tabs).
+Suggestion: Learn the keyboard shortcuts
+
 
 ## Java Style
 
