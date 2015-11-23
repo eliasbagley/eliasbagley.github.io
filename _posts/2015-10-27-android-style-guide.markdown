@@ -42,6 +42,10 @@ Preferences | Editor | Code Style | Java | Wrapping and Braces | Group declarati
 ## Architecture Style
 
 
+## Testing
+
+Test interfaces on each of the following devices (use genymotion to simplify this): TODO
+
 # Use Lombok for data classes
 
 ```java
