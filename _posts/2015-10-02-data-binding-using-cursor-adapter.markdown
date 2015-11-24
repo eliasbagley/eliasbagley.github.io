@@ -349,7 +349,7 @@ To get `ContentProvider` to work properly, you'll need the following in `Android
 {% highlight xml %}
 <application>
     ...
-    <provider android:authorities="com.eliasbagley.cursorexample" android:exported="false" android:name="com.activeandroid.content.ContentProvider" />
+      <provider android:authorities="${applicationId}" android:exported="false" android:name="com.activeandroid.content.ContentProvider" />
     ...
 </application>
 {% endhighlight %}
