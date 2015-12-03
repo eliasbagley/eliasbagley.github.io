@@ -52,7 +52,15 @@ Where 1,2,..,n is the package number listed with the list command above
 
 # Find and replace recursively in a directory
 
+```
 find . -type f -print0 | xargs -0 sed -i 's/InjectView/Bind/g'
+```
+
+And for a sed dry run:
+
+```
+find . -type f -print0 | xargs -0 sed 's/InjectView/Bind/g' | less
+```
 
 ## Android
 
