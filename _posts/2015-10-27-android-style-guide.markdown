@@ -20,7 +20,7 @@ Suggestion: Learn the keyboard shortcuts
 
 ## Layout Style
 
-Prefer using `layout_marginStart` and `layout_marginEnd` over `layout_marginLeft` and `layout_marginRight`. For a left-to-right layout, start == left, and end == right, but for a right to left layout, start == right and end == left
+Prefer using `layout_marginStart` and `layout_marginEnd` over `layout_marginLeft` and `layout_marginRight`. For a left-to-right layout, start == left, and end == right, but for a right to left layout, start == right and end == left. Only if min API level >= 17.
 
 
 ## Java Style
