@@ -18,6 +18,10 @@ Suggestion: Hide the navigation bar (You can access with CMD + Up arrow. Use thi
 Suggestion: Hide the tabs (Double tap shift for search instead of relying on tabs).
 Suggestion: Learn the keyboard shortcuts
 
+## Layout Style
+
+Prefer using `layout_marginStart` and `layout_marginEnd` over `layout_marginLeft` and `layout_marginRight`. For a left-to-right layout, start == left, and end == right, but for a right to left layout, start == right and end == left
+
 
 ## Java Style
 
