@@ -25,6 +25,27 @@ Prefer using `layout_marginStart` and `layout_marginEnd` over `layout_marginLeft
 
 ## Java Style
 
+# Flatten uninteresting inner methods
+
+`onDown()` is a default implementation that just hast to be there. Flatten it to get it out of the way
+
+
+```
+    private void setupGestureDetector() {
+        _gestureDetector = new GestureDetectorCompat(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override public boolean onDown(MotionEvent e) { return true; }
+
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                // Interesting stuff
+                foo()
+                bar()
+            }
+        });
+    }
+
+```
+
 # use camelCase
 
 # public static final int CONSTANTS\_SHOULD\_BE\_IN\_SHOUTING\_SNAKE\_CASE = 42
