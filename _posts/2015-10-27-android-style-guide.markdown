@@ -27,6 +27,8 @@ Prefer using `layout_marginStart` and `layout_marginEnd` over `layout_marginLeft
 
 Prefer Android specific classes like `ArrayMap` over `HashMap` for better performance on mobile
 
+Use primitive types over Object types when possible. This avoids allocations and memory issues on constrained mobile devices.
+
 # Flatten uninteresting inner methods
 
 `onDown()` is a default implementation that just hast to be there. Flatten it to get it out of the way
