@@ -25,6 +25,8 @@ Prefer using `layout_marginStart` and `layout_marginEnd` over `layout_marginLeft
 
 ## Java Style
 
+Prefer Android specific classes like `ArrayMap` over `HashMap` for better performance on mobile
+
 # Flatten uninteresting inner methods
 
 `onDown()` is a default implementation that just hast to be there. Flatten it to get it out of the way
