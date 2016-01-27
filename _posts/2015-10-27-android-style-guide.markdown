@@ -359,7 +359,13 @@ _myButton = (Button)findViewById(R.id.my_button)
 
 # Use `Snackbar` instead of `Toast`
 
-# Use `CoordinatorLayout` instead of `FrameLayout`
+# Use `FrameLayout` instead of `RelativeLayout`, unless you realy need the extra functionality of `RelativeLayout`.
+
+`RelativeLayout` requires two layout passes to correctly lay out subviews, which is too slow. It's especially bad when you have a `RelativeLayout` nested inside another `RelativeLayout`, in which case you'll have 4 (!) layout passes.
+
+# Consider using `CoordinatorLayout` instead of `FrameLayout`
+
+Coordinator is the new 'super powered' `FrameLayout`. Probably not necessary unless you're using `FloatingActionButton` or `Snackbar`.
 
 # Use `dp` for dimentions, and `sp` for fonts
 
