@@ -50,6 +50,27 @@ Use primitive types over Object types when possible. This avoids allocations and
 
 ```
 
+# Consider extracting methods from Overriden anonymous inner classes if they are doing too much work
+
+Example:
+
+```
+new Callback() {
+  @Override public void success(Response response) {
+    ...
+  }
+
+  @Override public void failure(RetrofitError error) {
+    MyError e = parseErrorBody(error)
+  }
+
+  private void parseErrorBody(RetrofitError error) {
+    ...
+  }
+}
+```
+
+
 # use camelCase
 
 # public static final int CONSTANTS\_SHOULD\_BE\_IN\_SHOUTING\_SNAKE\_CASE = 42
