@@ -1,16 +1,16 @@
 ---
 layout: post
-title:  "Getting Started With Etherium"
+title:  "Getting Started With Ethereum"
 date:   2016-2-14 12:00:00
 comments: true
-categories: etherium
+categories: ethereum
 ---
 
-[Etherium][etherium-homepage] is a decentralized 'world computer' that lives on the Internet and allows secure execution of programs called 'smart contracts' on the Etherium blockchain. In order to deploy programs to the blockchain, you need Ether to pay for the resources you're consuming. You can generate Ether by 'mining', which is the process of participating in and securing the decentralized Etherium network. Once you have Ether, you can send it to other users using their Etherium address, or use it pay for running programs on the Etherium blockchain.
+[Ethereum][ethereum-homepage] is a decentralized 'world computer' that lives on the Internet and allows secure execution of programs called 'smart contracts' on the Ethereum blockchain. In order to deploy programs to the blockchain, you need Ether to pay for the resources you're consuming. You can generate Ether by 'mining', which is the process of participating in and securing the decentralized Ethereum network. Once you have Ether, you can send it to other users using their Ethereum address, or use it pay for running programs on the Ethereum blockchain.
 
-This guide will teach you how to set up a private testing blockchain, and how to mine your first Ether. The [getting started guide][eth-get-started] on the Etherium website didn't explain a few crucial points, such as how to get the `genesis.json` file. This is a quick guide to rectify that. See [here][etherium-intro] for a more detailed explanation of what Etherium is and why it's awesome.
+This guide will teach you how to set up a private testing blockchain, and how to mine your first Ether. The [getting started guide][eth-get-started] on the Ethereum website didn't explain a few crucial points, such as how to get the `genesis.json` file. This is a quick guide to rectify that. See [here][ethereum-intro] for a more detailed explanation of what Ethereum is and why it's awesome.
 
-## 1) Install the Etherium Go client, Geth
+## 1) Install the Ethereum Go client, Geth
 
 From the terminal:
 
@@ -20,11 +20,11 @@ bash <(curl https://install-geth.ethereum.org -L)
 
 ## 2) `cd` to a new blank directory
 
-`mkdir ~/etherium_test && cd ~/etherium_test`
+`mkdir ~/ethereum_test && cd ~/ethereum_test`
 
 ## 3) Create an empty directory for the test blockchain
 
-This is so our testnet doesn't clobber the main Etherium blockchain
+This is so our testnet doesn't clobber the main Ethereum blockchain
 
 `mkdir .testchain`
 
@@ -75,11 +75,11 @@ var account = eth.accounts[0]
 eth.getBalance(account)
 ```
 
-Now that you have Ether, you can follow the example on the etherium website to set up a [greeter contract][greeter-contract]
+Now that you have Ether, you can follow the example on the ethereum website to set up a [greeter contract][greeter-contract]
 
 [eth-get-started]:https://www.ethereum.org/cli
 [greeter-contract]:https://www.ethereum.org/greeter
-[etherium-intro]:https://ethereum.gitbooks.io/frontier-guide/content/ethereum.html
-[etherium-homepage]:https://www.ethereum.org/
+[ethereum-intro]:https://ethereum.gitbooks.io/frontier-guide/content/ethereum.html
+[ethereum-homepage]:https://www.ethereum.org/
 
 
