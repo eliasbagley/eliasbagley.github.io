@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Launching Android Studio from the Terminal"
+title:  "Getting Started With Etherium"
 date:   2016-2-15 12:00:00
 comments: true
 categories: etherium
@@ -9,7 +9,6 @@ categories: etherium
 ## 1) Install the Etherium Go client, Geth
 
 From the terminal:
-
 
 ```
 bash <(curl https://install-geth.ethereum.org -L)
