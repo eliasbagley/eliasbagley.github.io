@@ -6,7 +6,7 @@ comments: true
 categories: ethereum
 ---
 
-[Ethereum][ethereum-homepage] is a decentralized 'world computer' that lives on the Internet and allows secure execution of programs called 'smart contracts' on the Ethereum blockchain. In order to deploy programs to the blockchain, you need Ether to pay for the resources you're consuming. You can generate Ether by 'mining', which is the process of participating in and securing the decentralized Ethereum network. Once you have Ether, you can send it to other users using their Ethereum address, or use it pay for running programs on the Ethereum blockchain.
+[Ethereum][ethereum-homepage] is a decentralized 'world computer' that lives on the Internet and allows secure execution of programs called 'smart contracts' on the Ethereum blockchain. In order to deploy programs to the blockchain, you need Ether to pay for the resources you're consuming. You can generate Ether by 'mining', which is the process of participating in and securing the decentralized Ethereum network. Once you have Ether, you can send it to other users using their Ethereum address, or use it to pay for running programs on the Ethereum blockchain.
 
 This guide will teach you how to set up a private testing blockchain, and how to mine your first Ether. The [getting started guide][eth-get-started] on the Ethereum website didn't explain a few crucial points, such as how to get the `genesis.json` file. This is a quick guide to rectify that. See [here][ethereum-intro] for a more detailed explanation of what Ethereum is and why it's awesome.
 
