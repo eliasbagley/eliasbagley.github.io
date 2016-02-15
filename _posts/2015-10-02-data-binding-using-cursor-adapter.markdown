@@ -6,6 +6,8 @@ comments: true
 categories: Android
 ---
 
+Edit: I don't think this approach is that good anymore. Replace the `Loader` with `RxJava`.
+
 A common paradigm in many Android applications is to load a list of objects from a webservice, and display it in in a `ListView`. The easiest and most common way to implement this is:
 
 1) Launch the Activity which contains the `ListView` and a subclass of `BaseAdapter`, which holds a reference to a list in memory<br>
