@@ -72,8 +72,8 @@ var account = eth.accounts[0]
 eth.getBalance(account)
 ```
 
-Now that you have Ether, you can follow the example on the etherium website to set up a [greeter contract]
+Now that you have Ether, you can follow the example on the etherium website to set up a [greeter contract][greeter-contract]
 
-[greeter contract]:https://www.ethereum.org/greeter
+[greeter-contract]:https://www.ethereum.org/greeter
 
 
