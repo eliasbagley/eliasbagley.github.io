@@ -1,0 +1,38 @@
+List all the sdks available
+
+Download the latest platform tools, build tools
+
+Download your images - you probably want the latest x86 google API
+
+(if you get the noabi error, make sure you download an abi), grep filter by ABI
+
+Download the haxml accelerator
+
+run ./silent-install.sh
+
+create the emulator
+
+`android create avd -n test_google_x86_23 -t 46 --abi google_apis/x86_64`
+
+run the emulator with no window
+
+`emulator @test_google_x86_23` -no-window &`
+
+You should see this output if everything is working:
+
+```
+Hax is enabled
+Hax ram_size 0x40000000
+HAX is working and emulator runs in fast virt mode.
+ ```
+
+Run your connected android  tests
+
+`./gradlew cAT`
+
+Kill the emulator when you're done
+
+`adb kill emu`
+
+
+
