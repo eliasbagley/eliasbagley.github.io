@@ -45,12 +45,13 @@ This is so our testnet doesn't clobber the main Ethereum blockchain
 
 ```
 
+The difficulty is set very low so that we can mine quickly.
 
 ## 5) Run a private test net
 
 `geth --genesis genesis.json --datadir .testchain --networkid 9876 --nodiscover --maxpeers 0 console`
 
-You can set the network id to whatever you want. Only clients on the same network id are allowed to connect to each other, so if you put in a unique network id, this creates a private testnet. `--nodiscover` and `--maxpeers 0` make it so that no one can discover you on your test network if they happen to have the same id, and so that you won't connect to anyone else either. The difficulty is set very low so that we can mine quickly.
+You can set the network id to whatever you want. Only clients on the same network id are allowed to connect to each other, so if you put in a unique network id, this creates a private testnet. `--nodiscover` and `--maxpeers 0` make it so that no one can discover you on your test network if they happen to have the same id, and so that you won't connect to anyone else either.
 
 ## 6) Create an account from the Geth console
 
