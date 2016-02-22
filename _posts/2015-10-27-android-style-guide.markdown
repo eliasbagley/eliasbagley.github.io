@@ -23,6 +23,36 @@ Suggestion: Learn the keyboard shortcuts
 Prefer using `layout_marginStart` and `layout_marginEnd` over `layout_marginLeft` and `layout_marginRight`. For a left-to-right layout, start == left, and end == right, but for a right to left layout, start == right and end == left. Only if min API level >= 17.
 
 
+## Build system style
+
+Split out a large build system into smaller reusable build files that can be included later
+
+If multiple dependencies share the same version, pull them out into an `ext{}` block and use String interpolation to resolve the version.o
+
+Example:
+
+```
+ext {
+    supportLibVersion = '23.0.1'
+}
+
+dependencies {
+    compile "com.android.support:appcompat-v7:${supportLibVersion}"
+    compile "com.android.support:design:${supportLibVersion}"
+    compile "com.android.support:support-annotations:${supportLibVersion}"
+    compile "com.android.support:support-v4:${supportLibVersion}"
+}
+
+```
+
+
+
+
+## Android Style
+
+Use the support versions of Android components (support.v4.app.Fragment, etc)
+
+
 ## Java Style
 
 Prefer Android specific classes like `ArrayMap` over `HashMap` for better performance on mobile
