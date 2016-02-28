@@ -10,14 +10,14 @@ For each of these, naviate to `Preferences -> Live Templates`, and create a new 
 
 # Static imports for tests
 
-```
+```java
 import static org.mockito.Mockito.*;
 import static com.google.common.truth.Truth.*;
 ```
 
 # Static imports for espresso tests
 
-```
+```java
 import static android.support.test.espresso.Espresso.*;
 import static android.support.test.espresso.matcher.ViewMatchers.*;
 import static android.support.test.espresso.assertion.ViewAssertions.*;
