@@ -22,3 +22,10 @@ import static android.support.test.espresso.Espresso.*;
 import static android.support.test.espresso.matcher.ViewMatchers.*;
 import static android.support.test.espresso.assertion.ViewAssertions.*;
 ```
+
+# Adding an ActivityTestRule for tests
+
+```java
+@Rule
+public ActivityTestRule<$ACTIVITY$> activityRule = new ActivityTestRule($ACTIVITY$.class);
+```
