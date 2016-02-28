@@ -6,7 +6,7 @@ comments: true
 categories: Android
 ---
 
-For each of these, naviate to `Preferences -> Live Templates`, and create a new Live Template. Define the context as 'Java'.
+For each of these, naviate to `Preferences -> Live Templates`, and create a new Live Template. Define the context as `Java`.
 
 # Static imports for tests
 
@@ -25,7 +25,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.*;
 
 # Adding an ActivityTestRule for tests
 
-```java
+```
 @Rule
 public ActivityTestRule<$ACTIVITY$> activityRule = new ActivityTestRule($ACTIVITY$.class);
 ```
