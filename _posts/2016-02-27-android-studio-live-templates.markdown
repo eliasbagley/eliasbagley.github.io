@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Useful Live Templates for Android Development"
-date:   2016-02-28 12:00:00
+date:   2016-02-27 12:00:00
 comments: true
 categories: Android
 ---
