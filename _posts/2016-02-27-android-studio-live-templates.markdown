@@ -29,3 +29,13 @@ import static android.support.test.espresso.assertion.ViewAssertions.*;
 @Rule
 public ActivityTestRule<$ACTIVITY$> activityRule = new ActivityTestRule($ACTIVITY$.class);
 ```
+
+# Add MAIN, DEFAULT, and LAUNCHER intent filters to quickly switch which activity gets launched for development
+
+```xml
+<intent-filter>
+    <action android:name="android.intent.action.MAIN"/>
+    <category android:name="android.intent.category.DEFAULT"/>
+    <category android:name="android.intent.category.LAUNCHER"/>
+</intent-filter>
+```

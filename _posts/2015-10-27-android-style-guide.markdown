@@ -50,7 +50,7 @@ dependencies {
 
 ## Android Style
 
-Use the support versions of Android components (support.v4.app.Fragment, etc)
+Use the support versions of Android components (support.v4.app.Fragment, Toolbar etc)
 
 
 ## Java Style
