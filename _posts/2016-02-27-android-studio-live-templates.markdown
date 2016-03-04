@@ -39,3 +39,19 @@ public ActivityTestRule<$ACTIVITY$> activityRule = new ActivityTestRule($ACTIVIT
     <category android:name="android.intent.category.LAUNCHER"/>
 </intent-filter>
 ```
+
+# Quickly add custom annotation
+
+```xml
+import java.lang.annotation.Retention;
+import javax.inject.Qualifier;
+
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+@Qualifier
+@Retention(RUNTIME)
+public @interface $FILENAME$ {
+}
+```
+
+Click `Edit variables` on the right hand side, and enter `fileNameWithoutExtension()` for the `FILENAME` variable, to have the filename prepopulated.
