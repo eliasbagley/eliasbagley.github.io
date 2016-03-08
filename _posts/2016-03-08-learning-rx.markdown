@@ -31,9 +31,9 @@ Streams have a concept of a "scheduler", which is just an operator that you can 
 myObservable
 .map(value -> someOtherValue)
 .observeOn(Schedulers.newThread())
-.map(some_computation_heavy_operation())
+.map(value -> some_computation_heavy_operation(value))
 .observeOn(AndroidSchedulers.mainThread())
-.subscribe(... )
+.subscribe(...)
 ```
 
 This is big part of the reason why people love RX. It turns something hard like concurrency into something pretty trivial.
