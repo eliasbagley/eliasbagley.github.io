@@ -8,6 +8,8 @@ categories: Android
 
 For each of these, naviate to `Preferences -> Live Templates`, and create a new Live Template. Define the context as `Java`.
 
+A note on why to use templates: It's not just that your're shaving off a few seconds here and there, but that you will internatilze that certain actions are now trivial and have very little metal resistance to doing. For example, I before might not have bothered to create a custom annotation, and instead used the @Named("") annotation, but now that I have a live template set up for it becomes so easy to add a custom annotation that I may as well do it and get the code completion benefits of not having to use @Named("") all over the place. If you lower the total activation energy for the action, the action becomes more likely to occur.
+
 # Static imports for tests
 
 ```java
@@ -52,6 +54,13 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface $FILENAME$ {
 }
+```
+
+# Throw an assertion error for an unhandled case in a switch statement
+
+```java
+default:
+  throw new AssertionError("Unhandled branch");
 ```
 
 Click `Edit variables` on the right hand side, and enter `fileNameWithoutExtension()` for the `FILENAME` variable, to have the filename prepopulated.
