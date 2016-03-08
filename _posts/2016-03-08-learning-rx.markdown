@@ -41,6 +41,7 @@ This is big part of the reason why people love RX. It turns something hard like 
 Common problems I've run into with RxJava - forgetting to to unsubscribe a subscription, which causes a memory leak. The solution to this is to put a `CompositeSubscription` into a base class, and add all subscriptions to that, and to unsubscribe from the composite subscription when the class is destroyed. `CompositeSubscription` just calls unsubscribe on every subscription in it when it receives an unsubscribe call.
 
 The aha! moment for me happened once I understood `flatMap` and how to use it to avoid a bunch of nested callbacks
+
 Slightly more advanced related reading: [Don't break the chain][link_4]
 
 
