@@ -6,7 +6,7 @@ comments: true
 categories: rx
 ---
 
-I originally typed this up as a slack storm to my coworkers, and figured it might be useful to live on as a blog post I can point peoplt to.
+I originally typed this up as a slack storm to my coworkers, and figured it might be useful to live on as a blog post I can point people to.
 
 Rx (Reactive Extensions) is an abstraction of computation using functional programming techniques. There are implementations of Rx in most major languages.
 
