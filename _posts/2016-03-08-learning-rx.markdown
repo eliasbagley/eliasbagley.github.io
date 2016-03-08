@@ -14,7 +14,7 @@ Read these first for an introduction:
 
 [Introduction to Reactive Programming][link_1]
 
-[4 part series][link_2], and uses RxJava as the implementation, but the concepts should be pretty much directly translateable to RxSwift
+[4 part series on RxJava][link_2], but the concepts should be pretty much directly translateable to any other Rx implementation, such as RxSwift or RxJS
 
 [ReactiveX documentation][link_3] for when you want to understand a single class or operator better. The marble diagrams are super helpful when you're trying to wrap your head around what an operator does.
 
