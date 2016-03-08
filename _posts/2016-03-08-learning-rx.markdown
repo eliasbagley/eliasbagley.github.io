@@ -18,11 +18,11 @@ Read these first for an introduction:
 
 [ReactiveX documentation][link_3] for when you want to understand a single class or operator better. The marble diagrams are super helpful when you're trying to wrap your head around what an operator does.
 
-The main things it's important to become familiar with are the Observable, Subscriber, and Subscription, and a handful of common operators. There are dozens of operators, but the ones I use most often in order are are: map, observeOn, scheduleOn, toBlocking, first, filter, reduce, debounce, combineLatest, zip.
+The main things it's important to become familiar with are the `Observable`, `Subscriber`, and `Subscription`, and a handful of common operators. There are dozens of operators, but the ones I use most often in order are are: `map`, `observeOn`, `scheduleOn`, `toBlocking`, `first`, `take`, `filter`, `reduce`, `debounce`, `combineLatest`, `zip`.
 
-About interfacing with non-rx code: calling .toBlocking().first() on an observable is a great way to grab a value of of the stream, without having to subscribe to it.
+About interfacing with non-rx code: calling `.toBlocking().first()` on an observable is a great way to grab a value of of the stream, without having to subscribe to it.
 
-Another great way to interface with non-rx code is to use a Subject, which acts as both a Subscriber and an Observable. This is the easiest way to create an rx wrapper for something. The wrapping class creates a Subject which it can put values into however it wants, and exposes some sort of `getAsObservable()` method, and the consuming class calls the `getAsObservable()` method and can treat it like any other Observable
+Another great way to interface with non-rx code is to use a `Subject`, which acts as both a `Subscriber` and an `Observable`. This is the easiest way to create an rx wrapper for something. The wrapping class creates a `Subject` which it can put values into however it wants, and exposes some sort of `getAsObservable()` method, and the consuming class calls the `getAsObservable()` method and can treat it like any other Observable
 
 Streams have a concept of a "scheduler", which is just an operator that you can add to the chain and it causes operations that flow through that to be applied to whatever thread you want. So something like this:
 
@@ -38,7 +38,7 @@ myObservable
 
 This is big part of the reason why people love RX. It turns something hard like concurrency into something pretty trivial.
 
-Common problems I've run into with RxJava - forgetting to to unsubscribe a subscription, which causes a memory leak. The solution to this is to put a `CompositeSubscription` into a base class, and add all subscriptions to that, and to unsubscribe from the composite subscription when the class is destroyed. CompositeSubscription just calls unsubscribe on every subscription in it when it receives an unsubscribe call.
+Common problems I've run into with RxJava - forgetting to to unsubscribe a subscription, which causes a memory leak. The solution to this is to put a `CompositeSubscription` into a base class, and add all subscriptions to that, and to unsubscribe from the composite subscription when the class is destroyed. `CompositeSubscription` just calls unsubscribe on every subscription in it when it receives an unsubscribe call.
 
 The aha! moment for me happened once I understood `flatMap` and how to use it to avoid a bunch of nested callbacks
 Slightly more advanced related reading: [Don't break the chain][link_4]
