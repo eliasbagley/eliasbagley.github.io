@@ -56,6 +56,9 @@ public @interface $FILENAME$ {
 }
 ```
 
+Click `Edit variables` on the right hand side, and enter `fileNameWithoutExtension()` for the `FILENAME` variable, to have the filename prepopulated.
+
+
 # Throw an assertion error for an unhandled case in a switch statement
 
 ```java
@@ -63,4 +66,4 @@ default:
   throw new AssertionError("Unhandled branch");
 ```
 
-Click `Edit variables` on the right hand side, and enter `fileNameWithoutExtension()` for the `FILENAME` variable, to have the filename prepopulated.
+
