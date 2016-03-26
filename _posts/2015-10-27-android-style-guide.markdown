@@ -33,6 +33,38 @@ Use `adb shell am kill app-id` to force process death to test restoring state af
 
 Test with Espresso, Truth, JUnit4, and Mockito
 
+## Libraries
+
+Use Navi to make onDestroy() cleanup events occur right next to the corresponding action that creates it. This "shortens the conceptual gap between the static program and the dynamic process" -
+
+"Our intellectual powers are rather geared to master static relations and that our powers to visualize processes evolving in time are relatively poorly developed. For that reason we should do (as wise programmers aware of our limitations) our utmost to shorten the conceptual gap between the static program and the dynamic process, to make the correspondence between the program (spread out in text space) and the process (spread out in time) as trivial as possible." - Edsger Dijkstra
+
+Example: Adding an Drawer open listener, and removing the listener in the Activity's `onDestroy()`. Usually, these two lines of code appear in completely different parts of the text file, and can make it difficult to reason about their relationship.
+
+YES:
+```
+drawer.addDrawerListener(drawerToggle);
+addListener(Event.DESTROY, Void -> drawer.removeDrawerListener(drawerToggle));
+```
+
+NO:
+
+```
+drawer.addDrawerListener(drawerToggle);
+
+... 100 lines later ...
+
+@Override
+protected void onDestroy() {
+    super.onDestroy();
+    drawer.removeDrawerListener(drawerToggle);
+}
+```
+
+
+
+Use Leak Canary to detect Activity memory leaks.
+
 
 ## Useful Android Studio Hotkeys
 
