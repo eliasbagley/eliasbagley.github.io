@@ -22,12 +22,27 @@ Suggestion: Learn the keyboard shortcuts
 
 Prefer using `layout_marginStart` and `layout_marginEnd` over `layout_marginLeft` and `layout_marginRight`. For a left-to-right layout, start == left, and end == right, but for a right to left layout, start == right and end == left. Only if min API level >= 17.
 
+In linear layouts, use either margin_bottom or margin_top, or margin_left, margin_right, but not both. Be consistent TODO
+
+
+## Android testing
+
+Use `Do Not Keep Activites` setting to discover `saveInstanceState` and `restoreInstanceState` bugs
+
+Use `adb shell am kill app-id` to force process death to test restoring state after process death
+
+Test with Espresso, Truth, JUnit4, and Mockito
+
+
+## Useful Android Studio Hotkeys
+
+CMD CTRL UP ARROW to navigate between Activites/Fragments and layout files.
 
 ## Build system style
 
 Split out a large build system into smaller reusable build files that can be included later
 
-If multiple dependencies share the same version, pull them out into an `ext{}` block and use String interpolation to resolve the version.o
+If multiple dependencies share the same version, pull them out into an `ext{}` block and use String interpolation to resolve the version.
 
 Example:
 
