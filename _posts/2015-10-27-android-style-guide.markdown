@@ -61,6 +61,18 @@ protected void onDestroy() {
 }
 ```
 
+Good example of usage:
+```
+  AdditionalInfoActivity.show(this);
+  addListener(Event.ACTIVITY_RESULT, event -> {
+      if (event.requestCode() == AdditionalInfoActivity.REQUEST_CODE && event.resultCode() == RESULT_OK) {
+          Intent data = event.data();
+          AdditionalInfo additionalInfo = Parcels.unwrap(data.getParcelableExtra(AdditionalInfoActivity.RESULT_ADDITIONAL_INFO));
+          Timber.d("Got additional info: %s", additionalInfo);
+      }
+  });
+```
+
 
 
 Use Leak Canary to detect Activity memory leaks.
