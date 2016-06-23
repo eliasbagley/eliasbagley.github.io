@@ -62,6 +62,13 @@ And for a sed dry run:
 find . -type f -print0 | xargs -0 sed 's/InjectView/Bind/g' | less
 ```
 
+# Run a script every time the current directory changes
+
+```bash
+brew install fswatch
+fswatch -o . | xargs -n1 -I{} ./myscript.sh
+```
+
 ## Android
 
 When genymotion gives the error `unable to start virtualbox`
