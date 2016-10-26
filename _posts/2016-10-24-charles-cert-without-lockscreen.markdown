@@ -8,7 +8,7 @@ categories: android
 
 In order to intercept our Android device's SSL traffic using charles, we need to install the charles certificate to our device. The normal instructions you'll find on the web for doing this install the certificate as a user certificate, which requires a lockscreen password or pattern to be set. If you're like me and don't like having to enter a password or pattern every time you open your phone, then you can follow the below instructions to install the charles certificate as a system certificate, instead of a user certificate. This requires a rooted phone.
 
-The overview of what we need to do is to put the charles certificate file into the Android device's /system/etc/security/cacerts folder, with the correct filename, file format, file permissions, and file owner. The filename needs to be the hash of certificate, the extension needs to be `.0`, the file permissions need to be `644`, the file owner and group need to be root, and we will massage the certificate .pem file into the correct format with some openssl commands.
+The overview of what we need to do is to put the charles certificate file into the Android device's `/system/etc/security/cacerts` folder, with the correct filename, file format, file permissions, and file owner. The filename needs to be the hash of certificate, the extension needs to be `.0`, the file permissions need to be `644`, the file owner and group need to be root, and we will massage the certificate .pem file into the correct format with some openssl commands.
 
 First, check what version of ssl you have
 
@@ -128,7 +128,7 @@ If you're lazy and you trust me, download the .pem certificate file, plug in you
 
 4) `su`
 
-5) `mount -o remount,rw /system
+5) `mount -o remount,rw /system`
 
 6) `sh /sdcard/device_script.sh`
 
