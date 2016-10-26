@@ -148,10 +148,7 @@ out=$hash.0
 cat $in > $out
 openssl x509 -inform PEM -text -fingerprint -in $in | sed '/-----BEGIN/,$ d' >> $out
 
-# push file and script onto device
-adb push /sdcard/$file
-
-# push the files
+# push the file and script to the android device
 adb push device_script.sh /sdcard/
 adb push $out /sdcard/
 
