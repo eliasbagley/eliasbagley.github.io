@@ -153,9 +153,6 @@ adb push device_script.sh /sdcard/
 adb push $out /sdcard/
 
 rm $out
-
-# run the script on the device
-#adb shell sh /sdcard/device_script.sh
 ```
 
 device_script.sh
