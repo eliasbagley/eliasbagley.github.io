@@ -10,7 +10,9 @@ In order to intercept our Android device's SSL traffic using charles, we need to
 
 The overview of what we need to do is to put the charles certificate file into the Android device's `/system/etc/security/cacerts` folder, with the correct filename, file format, file permissions, and file owner. The filename needs to be the hash of certificate, the extension needs to be `.0`, the file permissions need to be `644`, the file owner and group need to be root, and we will massage the certificate .pem file into the correct format with some openssl commands.
 
-First, check what version of ssl you have
+First, download the charles certificate .pem file by opening the Charles app and navigating to `http://charlesproxy.com/getssl` in the web browser. This will open a save dialog for the certificate file.
+
+Next, check what version of ssl you have
 
 > `openssl x509 -inform PEM -subject_hash_old -in charles-proxy-ssl-proxying-certificate.pem  | head -1`
 
@@ -20,7 +22,7 @@ if this complains that there is no flag `subject_hash_old`, then that means you 
 
 openssl 1.0 changed the subject hash algorithm, which is why we need the `subject_hash_old`, to tell it to use the old hash algorithm, since this is what Android needs the filename to be.
 
-2. Next, convert the charles certificate into the correct format, where `SUBJECT_HASH` is the hash returned from the previous command
+Next, convert the charles certificate into the correct format, where `SUBJECT_HASH` is the hash returned from the previous command
 
 > `openssl x509 -inform PEM -text -fingerprint -in charles-proxy-ssl-proxying-certificate.pem >> SUBJECT_HASH.0`
 
