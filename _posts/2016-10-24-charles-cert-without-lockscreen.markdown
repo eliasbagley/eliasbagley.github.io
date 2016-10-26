@@ -29,6 +29,7 @@ This gets us close, but not quite what Android needs. We need to move the cert b
 The file should look something like this:
 
 f6401b1.0
+
 ```
 -----BEGIN CERTIFICATE-----
 MIIFkjCCBHqgAwIBAgIGAVPMUdZRMA0GCSqGSIb3DQEBCwUAMIHNMV8wXQYDVQQD
@@ -82,6 +83,7 @@ Next, adb push the file to the sdcard
 Enter the device's shell, and become the superuser
 
 > `adb shell`
+
 > `su`
 
 Your terminal should have changed from `$` to `#`. If it didn't, then this means your device is _not_ rooted, and the next command will fail
@@ -117,16 +119,24 @@ If you already had the charles certificate installed as a user certificate, you 
 If you're lazy and you trust me, download the .pem certificate file, plug in your rooted android device, and run the following commands, which automate some of the above steps
 
 1) put `script.sh`, `device_script.sh` and `charles-proxy-ssl-proxying-certificate.pem` in the same directory
+
 2) make scripts executable
+
 3) `./script.sh`
+
 3) `adb shell`
+
 4) `su`
+
 5) `mount -o remount,rw /system
+
 6) `sh /sdcard/device_script.sh`
+
 7) `reboot`
 
 
 script.sh
+
 ```bash
 #!/bin/sh
 #####################
@@ -152,6 +162,7 @@ rm $out
 ```
 
 device_script.sh
+
 ```bash
 #!/bin/sh
 # This script is executed on the device
