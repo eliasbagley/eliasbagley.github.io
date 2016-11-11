@@ -6,7 +6,7 @@ comments: true
 categories: shell
 ---
 
-I'm currently in Rio de Janeiro, trying to download Xcode 8 from a slow connection in a coffee shop. The download makes it to about 200 Mb out of 4 Gb, and the connection gets interruped and I have to start again. There's probably an intelligent download manager somewhere out there that can solve, but I just ended up writing my own script using `curl` to fetch the file in chunks, and recombine it at the end with `cat`.
+I'm currently in Rio de Janeiro, trying to download Xcode 8 from a slow connection in a coffee shop. The download makes it to about 200 Mb out of 4 Gb, and the connection gets interruped and I have to start again. There's probably an intelligent download manager somewhere out there that can solve this, but I just ended up writing my own script using `curl` to fetch the file in chunks, and recombine it at the end with `cat`.
 
 `curl` can't automatically fetch the Xcode file, since you have to be logged in to the Apple developer portal. To solve this, I logged in to the developer portal, found the download link, and opened the network tab in the chrome developer tools. You can right click on the logged network request for the xcode file, and choose "Copy as curl", to get the right request with the correct cookies already set.
 
