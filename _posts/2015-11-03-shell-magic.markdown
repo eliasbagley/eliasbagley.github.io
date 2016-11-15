@@ -24,6 +24,9 @@ The `$4` `$5` and `$5` were due to the fact that the `git status` output had spa
 
 Easy to remember since its pronouncable as "douche", as in _who's the douche using up all the disk space_
 
+# Show entire disk suage
+
+`df -h`
 
 ## Android
 
