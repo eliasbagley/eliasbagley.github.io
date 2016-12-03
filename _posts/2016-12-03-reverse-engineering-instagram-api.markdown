@@ -70,7 +70,7 @@ And to construct the signed body:
 
 You can use this signed body and now script your own requests to Instagram's private API, as if you were issuing those requests directly from your Instagram app. Anything the app can do, your scripts can now do!
 
-[frida-url]: www.frida.re
+[frida-url]: http://www.frida.re
 [JustTrustMeUrl]: https://github.com/Fuzion24/JustTrustMe
 [XposedUrl]: http://repo.xposed.info/
 [InstallCharlesurl]: http://eliasbagley.github.io/android/2016/10/26/charles-cert-without-lockscreen.html
