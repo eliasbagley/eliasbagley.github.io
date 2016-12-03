@@ -24,7 +24,9 @@ Ok.. so we need a way to get Instagram's signing key. How? The Instagram app on 
 
 Let's break out the big guns then. [Frida][frida-url] is a tool that allows you to inject JS into the running process and sniff or modify memory, function arguments, and return values.
 
-Here's the Frida script that I used:
+
+Here's the Frida script that I used, modified from the Frida docs and the folks [here][ctf-url] which did the hard dissasembly work to find the actual function we need to hook:
+
 
 ```python
 import frida, sys
@@ -74,3 +76,4 @@ You can use this signed body and now script your own requests to Instagram's pri
 [JustTrustMeUrl]: https://github.com/Fuzion24/JustTrustMe
 [XposedUrl]: http://repo.xposed.info/
 [InstallCharlesurl]: http://eliasbagley.github.io/android/2016/10/26/charles-cert-without-lockscreen.html
+[ctf-url]: https://github.com/ctfs/write-ups-2016/blob/39e9a0e2adca3a3d0d39a6ae24fa51196282aae4/cyber-security-challenge-belgium-2016-qualifiers/Mobile%20Security/Phishing-is-not-a-crime/README.md
