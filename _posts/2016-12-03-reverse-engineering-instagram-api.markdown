@@ -14,7 +14,7 @@ For starters, the API uses SSL, which means that you can't just hook up a proxy 
 
 I tried this with the Instagram API, and the server was rejected the Charles root certificate. Damn! That means Instagram is using certificate pinning, where the server will only accept it's own certificates, and rejects the Charles root certificate that it doesn't recognize.
 
-Well, I have a rooted Android phone with XPosed installed, and there's a nifty module called JustTrustMe. This appears to stub out the system's trust store, so it accepts _any_ certificate as valid. And it works! I can now see all the traffic my device sends and receives from the Instagram private API. (By the way - make sure to turn off JustTrustMe after you're done using it, or anyone will be able to MITM you. Not good.)
+Well, I have a rooted Android phone with [XPosed][XposedUrl] installed, and there's a nifty module called [JustTrustMe][JustTrustMeUrl]. This appears to stub out the system's trust store, so it accepts _any_ certificate as valid. And it works! I can now see all the traffic my device sends and receives from the Instagram private API. (By the way - make sure to turn off JustTrustMe after you're done using it, or anyone will be able to MITM you. Not good.)
 
 Ok, so now that I can pull my access token from one of the requests, I should be able to script that and issue my own requests to their API, right? Actually... wrong.
 
@@ -22,11 +22,11 @@ Instagram has another layer of security, where the requests are signed by a sign
 
 Ok.. so we need a way to get Instagram's signing key. How? The Instagram app on my device must have access to it, or else it wouldn't be able to interact with the server.
 
-Let's break out the big guns then. Frida is a tool that allows you to inject JS into the running process and sniff or modify memory, function arguments, and return values.
+Let's break out the big guns then. [Frida][frida-url] is a tool that allows you to inject JS into the running process and sniff or modify memory, function arguments, and return values.
 
 Here's the Frida script that I used:
 
-```
+```python
 import frida, sys
 
 def on_message(message, data):
@@ -49,7 +49,7 @@ script.load()
 sys.stdin.read()
 ```
 
-This attaches an interceptor to the `_ZN9Scrambler9getStringESs" function in `libscrambler.so`, which is the function the Instagram app is using to retrieve the signature key, and logs the value to the command line. We've done it!
+This attaches an interceptor to the `_ZN9Scrambler9getStringESs` function in `libscrambler.so`, which is the function the Instagram app is using to retrieve the signature key, and logs the value to the command line. We've done it!
 
 Now that we have the signature key, we can construct the signed body using the following:
 
@@ -70,3 +70,6 @@ And to construct the signed body:
 
 Ta da!
 
+[frida-url]: www.frida.re
+[JustTrustMeUrl]: https://github.com/Fuzion24/JustTrustMe
+[XposedUrl]: http://repo.xposed.info/
