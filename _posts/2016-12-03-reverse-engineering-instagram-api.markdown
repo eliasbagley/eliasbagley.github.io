@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Reverse Engineering the Instagram Private API"
+title:  "Reverse Engineering the Android Instagram App's Private API"
 date:   2016-12-02 23:22:15
 comments: true
 categories: reverseengineering
