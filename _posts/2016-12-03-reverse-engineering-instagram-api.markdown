@@ -12,7 +12,7 @@ Turns out that Instagram's private API is a little secure, and it won't be that 
 
 For starters, the API uses SSL, which means that you can't just hook up a proxy and sniff the traffic. No problem, you can use a proxy like Charles, [install the Charles Root Certificate to your device][InstallCharlesUrl], and you're all set and ready to go! This is usually all I've needed to do.
 
-I tried this with the Instagram API, and the server was rejected the Charles root certificate! Damn! That means Instagram is using certificate pinning, where the server will only accept it's own certificates, and rejects the Charles root certificate that it doesn't recognize.
+I tried this with the Instagram API, and the server rejected the Charles root certificate! Damn! That means Instagram is using certificate pinning, where the server will only accept it's own certificates, and rejects the Charles root certificate that it doesn't recognize.
 
 Well, I have a rooted Android phone with [XPosed][XposedUrl] installed, and there's a nifty module called [JustTrustMe][JustTrustMeUrl]. This appears to stub out the system's trust store, so it accepts _any_ certificate as valid. And it works! I can now see all the traffic my device sends and receives from the Instagram private API. (By the way - make sure to turn off JustTrustMe after you're done using it, or anyone will be able to MITM you. Not good.)
 
