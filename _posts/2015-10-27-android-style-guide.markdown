@@ -6,87 +6,125 @@ comments: true
 categories: android
 ---
 
-Note: This guide is a work in progress.
+# Android Studio
 
-## Android Studio
+- Always keep Android Studio up to date. Coordinate with the team when updating major versions.
 
-## Always keep Android Studio up to date
+- Suggestion: Hide the navigation bar. `View -> Uncheck navigation bar`
 
-## Android Studio Plugins
+- Suggestion: Hide the tabs (Double tap shift for search instead of relying on tabs).
 
-Suggestion: Hide the navigation bar (You can access with CMD + Up arrow. Use this context to create new files with CMD + N). `View -> Uncheck navigation bar etc`
-Suggestion: Hide the tabs (Double tap shift for search instead of relying on tabs).
-Suggestion: Learn the keyboard shortcuts
+- Suggestion: Learn the keyboard shortcuts
 
-## Layout Style
+- Use `//region description` to mark the beginning of a local section of code. Use `//endregion` to close it. This is like `//MARK: description` in iOS land.
 
-Prefer using `layout_marginStart` and `layout_marginEnd` over `layout_marginLeft` and `layout_marginRight`. For a left-to-right layout, start == left, and end == right, but for a right to left layout, start == right and end == left. Only if min API level >= 17.
+Android studio understands these markers and gives you the ability to collapse code inside of them.
 
-In linear layouts, use either margin_bottom or margin_top, or margin_left, margin_right, but not both. Be consistent TODO
+## Essential Android Studio Hotkeys
 
+- CMD CTRL UPARROW - toggle between Activites/Fragments and layout files.
 
-## Android testing
+- CMD SHIFT O - open quickly
 
-Use `Do Not Keep Activites` setting to discover `saveInstanceState` and `restoreInstanceState` bugs
+- CMD SHIFT A - searches for editor actions. Useful if you forget the hotkey for something - you can just fuzzy search by name.
 
-Use `adb shell am kill app-id` to force process death to test restoring state after process death
+# Android Studio Plugins
 
-Test with Espresso, Truth, JUnit4, and Mockito
+- Lombok
 
-## Libraries
+- Otto plugin, if you're using the Otto library
 
-Use Navi to make onDestroy() cleanup events occur right next to the corresponding action that creates it. This "shortens the conceptual gap between the static program and the dynamic process" -
+- ADB Idea
 
-"Our intellectual powers are rather geared to master static relations and that our powers to visualize processes evolving in time are relatively poorly developed. For that reason we should do (as wise programmers aware of our limitations) our utmost to shorten the conceptual gap between the static program and the dynamic process, to make the correspondence between the program (spread out in text space) and the process (spread out in time) as trivial as possible." - Edsger Dijkstra
+# Project Structure
 
-Example: Adding an Drawer open listener, and removing the listener in the Activity's `onDestroy()`. Usually, these two lines of code appear in completely different parts of the text file, and can make it difficult to reason about their relationship.
+- Group classes by type of object, not by feature.
 
-YES:
-```
-drawer.addDrawerListener(drawerToggle);
-addListener(Event.DESTROY, Void -> drawer.removeDrawerListener(drawerToggle));
-```
+All activities go in `controllers/activities`, all fragments go in `controllers/fragments`
 
-NO:
+All models go in `models` folder
 
-```
-drawer.addDrawerListener(drawerToggle);
+All data related stuff goes in `data` folder
 
-... 100 lines later ...
-
-@Override
-protected void onDestroy() {
-    super.onDestroy();
-    drawer.removeDrawerListener(drawerToggle);
-}
-```
-
-Good example of usage:
-```
-  AdditionalInfoActivity.show(this);
-  addListener(Event.ACTIVITY_RESULT, event -> {
-      if (event.requestCode() == AdditionalInfoActivity.REQUEST_CODE && event.resultCode() == RESULT_OK) {
-          Intent data = event.data();
-          AdditionalInfo additionalInfo = Parcels.unwrap(data.getParcelableExtra(AdditionalInfoActivity.RESULT_ADDITIONAL_INFO));
-          Timber.d("Got additional info: %s", additionalInfo);
-      }
-  });
-```
+All network related stuff goes in `network`. Add subfolders for `network/api`, `network/servicerequest`, `network/serviceresponse`, `network/managers`
 
 
+- Use Android Studio's default package and folder structure
 
-Use Leak Canary to detect Activity memory leaks.
+Put code into a `release/` subfolder if it will only ever be used for release
+
+Release mode can override classes in the main folder. Do this if you have classes with methods that will change depending on which build flavor you're using
+
+Put code into a `debug/` subfolder if it will ever only be used for debug builds
+
+Everything else goes in the main subfolder
+
+Code in `release` or `debug` will only be included in the APK if the app is being build for that mode.
 
 
-## Useful Android Studio Hotkeys
+# Android testing
 
-CMD CTRL UP ARROW to navigate between Activites/Fragments and layout files.
+- Use `Do Not Keep Activites` setting to discover `saveInstanceState` and `restoreInstanceState` bugs
 
-## Build system style
+- Use `adb shell am kill app-id` to force process death to test restoring state after process death
 
-Split out a large build system into smaller reusable build files that can be included later
+- Test with Espresso, Truth, JUnit4, and Mockito
 
-If multiple dependencies share the same version, pull them out into an `ext{}` block and use String interpolation to resolve the version.
+- Test UI on variety of screen sizes and API levels (Genymotion helps here)
+
+- Use Genymotion instead of the default Emulator
+
+
+# Libraries
+
+Java needs all the help it can get. Use these excellent 3rd party libs to make it suck less.
+
+Essential:
+
+- Dagger
+
+- Retrofit
+
+- RxJava
+
+- Retrolambda
+
+- SqlBrite
+
+- Leak Canary
+
+- Butterknife
+
+- Google Support libs
+
+Nice to have:
+
+- Picasso
+
+- Lombok
+
+- RxBindings
+
+- Timber. Use instead of `Log.d()`
+
+
+Situational:
+
+- Otto. Otto is an event bus - use where extreme decoupling is needed. Use the Otto plugin to prevent frustration. Don't overuse Otto.
+
+# Gradle style
+
+- TODO .staging, .debug etc
+
+- TODO structure of build.gradle
+
+- Add all dependencies through gradle. Don't add standalone jars into the project unless necessary
+
+- Protip: turn on Offline Mode in settings to prevent Gradle from pinging the jar repository on every build. This will decrease build times slightly.
+
+- Split out a large .gradle file into smaller reusable build files that can be included in the main build script
+
+- If multiple dependencies share the same version, pull them out into an `ext{}` block and use String interpolation to resolve the version.
 
 Example:
 
@@ -105,20 +143,122 @@ dependencies {
 ```
 
 
+- Set the app's version in `build.gradle`, NOT in `AndroidManifest.xml`. Put this information right at the top of the file for easy access
+
+- Put `dependency{}` and `compile` statements in the app's `build.gradle`, NOT in the top level project `build.gradle`
+
+- Put keystore information directly in `build.gradle`
+
+-  Avoid using + to specify version in the dependencies block. Use exact version numbers instead.
+
+Using + can lead to build reproducibility problems down the road.
+
+YES:
+`compile 'com.google.code.gson:gson:2.2.3'`
+
+NO:
+`compile 'com.google.code.gson:gson:2.2.+'`
+
 
 
 ## Android Style
 
-Use the support versions of Android components (support.v4.app.Fragment, Toolbar etc)
+- Integrate the Debug Drawer into the project!
 
+- Use the support versions of Android components, rather than the version directly bundled with the platform (support.v4.app.Fragment, etc)
+
+- Going forward, prefer to use the new `RecyclerView` for lists over `ListView`
+
+- Don't litter activities with intent setup code. Have each activity instead present a `public static show(Activity activity)` method
+
+- Prefer Android specific classes like `ArrayMap` over `HashMap` for better performance on mobile devices
+
+- Prefer Activities over Fragments, unless Fragments are necessary. Activities have a simpler lifecycle, and can be easily refactored into a Fragment if necessary.
+
+- Use ButterKnife for injecting views
+
+YES:
+
+```java
+@InjectView(R.id.my_view) TextView myView;
+```
+
+NO:
+
+```
+this.myView = (TextView)findViewById(R.id.my_view);
+```
+
+- Use ButterKnife `@OnClick` annotations instead of setting an `OnClickListener`
+
+
+YES:
+
+```java
+@OnClick(R.id.my_button)
+public void myButtonClicked(Button b) {
+}
+```
+
+NO:
+
+```java
+this.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        myButtonClicked();
+    }
+});
+```
+
+
+-  Order of Android Acitivty callbacks match the lifecycle
+
+```java
+public class MainActivity extends Activity {
+    //Order matches Activity lifecycle
+    @Override
+    public void onCreate() {}
+
+    @Override
+    public void onStart() {}
+
+    @Override
+    public void onStop() {}
+
+    @Override
+    public void onResume() {}
+
+    @Override
+    public void onPause() {}
+
+    @Override
+    public void onDestory() {}
+}
+```
+
+- Parameter ordering - if a `Context` object is being passed in, it comes first. If a `Callback` object is being passed in, it comes last.
+
+```java
+public void getUser(Context context, Callback<User> callback) {
+  ...
+}
+```
 
 ## Java Style
 
-Prefer Android specific classes like `ArrayMap` over `HashMap` for better performance on mobile
+- Use retrolambda and lambda syntax for single method interfaces
 
-Use primitive types over Object types when possible. This avoids allocations and memory issues on constrained mobile devices.
+```java
+articleStore.getArticle(id)
+        .subscribe(article -> {
+            doSomethingWithArticle(article);
+        });
+```
 
-Don't prefix your instance variables with any nonsense. mFiends don't let sFriends use hungarian notation. http://jakewharton.com/just-say-no-to-hungarian-notation/
+- Use primitive types over Object types when possible. This avoids allocations and memory issues on constrained mobile devices.
+
+- Don't prefix your instance variables with any nonsense. mFriends don't let sFriends use hungarian notation. http://jakewharton.com/just-say-no-to-hungarian-notation/
 
 GOOD:
 ```java
@@ -135,14 +275,20 @@ public class MyClass {
 }
 ```
 
-# Flatten uninteresting inner methods
+- Open braces on the same line
 
-`onDown()` is a default implementation that just hast to be there. Flatten it to get it out of the way
-
-
+```java
+public static void main(String[] args) {
+}
 ```
+
+- Flatten uninteresting inner methods
+
+Some callbacks in anonymous classes, like  `onDown()` in GestureDetector, are just boilerplate. Flatten it to make it visually stay out of the way.
+
+```java
     private void setupGestureDetector() {
-        _gestureDetector = new GestureDetectorCompat(this, new GestureDetector.SimpleOnGestureListener() {
+        this.gestureDetector = new GestureDetectorCompat(this, new GestureDetector.SimpleOnGestureListener() {
             @Override public boolean onDown(MotionEvent e) { return true; }
 
             @Override
@@ -156,17 +302,19 @@ public class MyClass {
 
 ```
 
-# Consider extracting methods from Overriden anonymous inner classes if they are doing too much work
+- Consider extracting methods from Overriden anonymous inner classes if they are doing too much work
 
 Example:
 
-```
+```java
 new Callback() {
-  @Override public void success(Response response) {
+  @Override
+  public void success(Response response) {
     ...
   }
 
-  @Override public void failure(RetrofitError error) {
+  @Override
+  public void failure(RetrofitError error) {
     MyError e = parseErrorBody(error)
   }
 
@@ -177,15 +325,124 @@ new Callback() {
 ```
 
 
-# use camelCase
 
-# public static final int CONSTANTS\_SHOULD\_BE\_IN\_SHOUTING\_SNAKE\_CASE = 42
+- Put constants into a Constants.java class
 
-# Put constants into a Constants.java class
+- Prefer interface types over implementation types
 
-## General Style
+YES:
 
-# Align fields and variables into columns
+```java
+public List<Integer> getList() {
+}
+```
+
+NO:
+
+```java
+public ArrayList<Integer> getList() {
+}
+```
+
+- Use type inference for generics
+
+YES:
+
+`List<Integer> list = new ArrayList<>();`
+
+NO:
+
+`List<Integer> list = new ArrayList<Integer>();`
+
+
+- Add static utility code to a Util class. Break it out into logical subgroups, like `StringUtils.java`, `ImageUtils.java` etc
+
+- Make these Util classes have a private constructor to prevent anyone from ever instantiating them
+
+
+- Method annotations should wrap (Android Studio Default)
+
+YES:
+
+```java
+@Override
+public void myMethod() {
+}
+  ```
+
+NO:
+```java
+@Override public void myMethod() {
+}
+```
+
+- Field annotations should not wrap. Change in Android Setudio settings: set field annotations to `do not wrap`
+
+YES:
+```java
+class MyClass {
+  @Inject Manager myManager;
+}
+
+```
+
+NO:
+```java
+class MyClass {
+  @Inject
+  Manager myManager;
+}
+```
+
+`Preferences -> Editor -> Code Style -> Java -> Wrapping and Braces tab -> Field Annotations`
+
+
+- Don't swallow exceptions
+
+```java
+try {
+  someDangerousCode();
+} catch (Exception e) {
+  // lol yolo
+}
+```
+
+- If find that you have a class that has multiple convenience constructors to aid in initializing optional variables, use the Builder pattern.
+
+YES:
+```java
+  return Person.builder()
+    .setFirstName("Elias")
+    .setLastName("Bagley")
+    .setAge(27)
+    .setOccupation("Engineer")
+    .setCatchphrase("Hello world!")
+    .build();
+```
+
+- Create a custom annotation rather than using `@Named`
+
+YES:
+```
+@Qualifier
+@Retention(RUNTIME)
+public @interface MyAnnotation {
+}
+```
+
+NO:
+```
+@Named("MyAnnotation")
+```
+
+This avoids String typing.
+
+
+- TODO: Class member ordering (constants, fields, constructors, override methods and callbacks, public public methods, private methods, inner classes or interfaces
+
+# General Style
+
+- Align fields and variables into columns
 
 In Android Studio, navigate to:
 
@@ -193,16 +450,44 @@ In Android Studio, navigate to:
 Preferences | Editor | Code Style | Java | Wrapping and Braces | Group declarations | Align fields in columns
 ```
 
-## Naming Conventions
+- Always have CI setup. Do this at the beginning of the project!
 
-## Architecture Style
+- Add a script to the project root to initiate a CI build, so you can release a build with a single command.
 
 
-## Testing
+# Naming Conventions
 
-Test interfaces on each of the following devices (use genymotion to simplify this): TODO
+- Don't suffix model names with Model. It's redundant
 
-# Use Lombok for data classes
+YES:
+`User user = new User();`
+
+NO:
+`UserModel user = new UserModel();`
+
+- Use camelCase for variables
+
+- public static final int CONSTANTS\_SHOULD\_BE\_IN\_SHOUTING\_SNAKE\_CASE = 42
+
+- Activity classes should be suffixed with `Activity` - `MainActivity.java`
+
+- Fragment classes should be suffixed with `Fragment` - `TestFragment.java`
+
+- Adapter classes should be suffixed with `Adapter` - `MyAdapter.java`
+
+- Dagger modules should be suffixed with `Module` - `AppModule.java`
+
+- Util classes should be suffixed with `Utils` - `StringUtils.java`
+
+- Retrofit API interfaces should be suffixed with `API` - `UserAPI.java`
+
+# Architecture Style
+
+- Use Dagger to provide dependencies. Split out dagger modules into logical subgroupings, such as AppModule, UIModule, DataModule, NetworkModule
+
+- Use Lombok for data classes to fight Java's verbosity
+
+before:
 
 ```java
 public class SocialAccessToken {
@@ -242,29 +527,40 @@ public class SocialAccessToken {
 }
 ```
 
+- Subclass all app objects from a base Object. You can add useful helper code here, like performing injection etc. Java doesn't have protocol extensions, so this is the next best thing.
 
-# Prefer interface types over implementation types
+    Subclass models from BaseModel
+
+    Subclass custom views from BaseView
+
+    Subclass activites from BaseActivity
+
+    Subclass fragments from BaseFragment
+
+
+## Network Layer Architecture
+
+- Have a ServiceRequest subclass for every request
+
+- Have a ServiceResponse subclass for every response
+
+- Put Retrofit API interfaces in a separate class
+
+- Put all Retrofit API interfaces together in a single folder
+
+# UI/Layout Style
+
+- Follow Material design
+
+- Use `match_parent` instead of `fill_parent` in layouts
+
+They do the same thing, but `match_parent` is the new version, `fill_parent` has been deprecated.
+
+- Put trailing /> in XML on a separate line
 
 YES:
 
-```java
-public List<Integer> getList() {
-}
-```
-
-NO:
-
-```java
-public ArrayList<Integer> getList() {
-}
-```
-
-# Trailing /> in XML on a separate line
-
-
-YES:
-
-```
+```xml
 <Button
     android:id="@+id/activity_login_twitter"
     android:layout_width="fill_parent"
@@ -275,7 +571,7 @@ YES:
 
 NO:
 
-```
+```xml
 <Button
     android:id="@+id/activity_login_twitter"
     android:layout_width="fill_parent"
@@ -285,51 +581,24 @@ NO:
 
 This makes it easy to add new properties at the end of the property list.
 
-# When in doubt, make custom views a subclass of RelativeLayout
+- By default, prefer `FrameLayout` (or `CoordinatorLayout`) as the parent view group. It is more flexible than `LinearLayout`, and more performant than `RelativeLayout`
 
-It offers the most flexibility
+`RelativeLayout` requires two layout passes to correctly lay out subviews, which is can get slow. It's especially bad when you have a `RelativeLayout` nested inside another `RelativeLayout`, in which case you'll have 4 layout passes!
 
-# Setup App Architecture Using Dagger
 
-# Keep all Dagger modules together in a daggermodules package
+- Follow the Android Studio default convention for naming layout and view xml files
 
-# Subclass all app objects from a base Object
+`view_my_button.xml`
 
-Subclass models from BaseModel
-Subclass custom views from BaseView
-Subclass activites from BaseActivity
-Subclass fragments from BaseFragment
-
-# Follow the Android Studio convention for naming layout and view xml files
-
-example..
-
-view_my_button.xml
-layout_main_activity.xml
+`layout_main_activity.xml`
 
 Android only has a single resources folder, and subfolers aren't allowed. Naming them this way visually groups related xml files together.
 
-# Add the Debug Drawer for every project
 
-# Retrofit API interfaces in a separate class
 
-# All API interfaces together in a single folder
-
-# Use @PATCH instead of @PUT for API updating
-
-# Open braces on the same line
-
-example:
-
-```java
-public static void main(String[] args) {
-}
-```
-
-# Reference all custom colors from a colors.xml class. Don't hard code colors into XML
+- Reference all custom colors from a colors.xml class. Don't hard code colors into XML
 
 _colors.xml_
-
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
@@ -338,12 +607,11 @@ _colors.xml_
 </resources>
 ```
 
-# Reference all strings from strings.xml. Don't hard code strings.
+- Reference all strings from `strings.xml`. Don't hard code strings into views or layout files!
 
-# Reference constants (margins, font sizes) from dimens.xml
+- Reference constants (margins, font sizes) from dimens.xml
 
 example:
-
 
 _dimens.xml_
 
@@ -367,17 +635,12 @@ _dimens.xml_
 </resources>
 ```
 
-# Prefer RecyclerView for lists
+- Prefer using `layout_marginStart` and `layout_marginEnd` over `layout_marginLeft` and `layout_marginRight`. For a left-to-right layout, start == left, and end == right, but for a right to left layout, start == right and end == left. Only if min API level >= 17.
 
-# Use Timber library for logging
+- Use `styles.xml` rather than specifying lots of duplicated attributes in xml files. This doesn't need to be applied religiously - use it when you find yourself duplicating lots of attributes.
 
-# Add all dependencies through gradle. Don't add standalone jars into the project.
+- Always pair custom view xml with a custom view subclass. Have `populate` methods on the subclass to bind model to view
 
-# Always have CI setup
-
-# Prefer Activities over Fragments, unless they're necessary
-
-# Always pair custom view xml with a custom view subclass. Have `populate` methods on the subclass to bind model to view
 
 ```java
 public class MyView extends RelativeLayout {
@@ -390,303 +653,8 @@ public class MyView extends RelativeLayout {
 }
 ```
 
-# Prefix private variables in activities
+- Use `dp` for dimentions, and `sp` for fonts
 
-```java
-@Inject Manager _manager;
-```
+- Break out shared layout code into a single .xml file, and include it rather than duplicating it.
 
-# Use ButterKnife for View Injection
 
-yes:
-
-```java
-@InjectView(R.id.my_view) TextView _myView;
-```
-
-no:
-
-```
-_myView = (TextView)findViewById(R.id.my_view);
-```
-
-# Use ButterKnife `@OnClick` annotations instead of setting an `OnClickListener`
-
-yes:
-
-```java
-@OnClick(R.id.my_button)
-public void myButtonClicked(Button b) {
-}
-```
-
-no:
-
-```java
-_myButton.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        myButtonClicked();
-    }
-});
-```
-
-
-# Generate assets only for xxdpi and let Android down sample as needed
-
-
-# Add utility code to a Util class
-
-# Use Otto event bus where extreme decoupling is needed. Pair with Otto plugin. Don't overuse otto.
-
-# Have a ServiceRequest subclass for every request
-
-# Have a ServiceResponse subclass for every response
-
-# If find that you have a class that has multiple convenience constructors to aid in initializing optional variables, use the Builder pattern (Lombok can generate it)
-
-# Avoid 'naked' variables
-
-yes:
-
-```java
-private String myString;
-public String getMyString() {
-  return this.myString
-}
-```
-
-no:
-
-```java
-public String myString;
-```
-
-# TODO .staging, .debug etc
-
-# TODO structure of build.gradle
-
-# Use github pull requests for workflow/code reviews. Use hub to do this from the command line.
-
-# Feel free to use Kotlin for a util class. Keep code that interacts heavily with Android in Java for now.
-
-# Put @Inject, @InjectView annotations on the same line
-
-# When ButterKnife @InjectView isn't available (Like in Android library projects) use ButterKnife's `findById` method instead
-
-yes:
-import static butterknife.ButterKnife.findById;
-
-_myButton = findById(this, R.id.my_button);
-
-no:
-_myButton = (Button)findViewById(R.id.my_button)
-
-# Don't litter activities with intent code. Have each activity instead present a public static show(Activity activity) method
-
-# Use `Snackbar` instead of `Toast`
-
-# Use `FrameLayout` instead of `RelativeLayout`, unless you realy need the extra functionality of `RelativeLayout`.
-
-`RelativeLayout` requires two layout passes to correctly lay out subviews, which is too slow. It's especially bad when you have a `RelativeLayout` nested inside another `RelativeLayout`, in which case you'll have 4 (!) layout passes.
-
-# Consider using `CoordinatorLayout` instead of `FrameLayout`
-
-Coordinator is the new 'super powered' `FrameLayout`. Probably not necessary unless you're using `FloatingActionButton` or `Snackbar`.
-
-# Use `dp` for dimentions, and `sp` for fonts
-
-# Include layouts in xml from a single place, rather than duplciating the code across two different layout files
-
-# Use editor config (enabled by default in Android Studio.. just don't turn it off)
-
-TODO: paste a cample editor config to use for android projects
-
-# Field annotations should not wrap. Change in Android Setudio settings: set field annotations to `do not wrap`
-
-yes:
-```java
-class MyClass {
-  @Inject Manager _myManager;
-}
-
-```
-
-no:
-```java
-class MyClass {
-  @Inject
-  Manager _myManager;
-}
-```
-
-# Method annotations should wrap (Android Studio Default)
-
-yes:
-
-```java
-@Override
-public void myMethod() {
-}
-  ```
-
-no:
-```java
-@Override public void myMethod() {
-}
-```
-
-`Preferences -> Editor -> Code Style -> Java -> Wrapping and Braces tab -> Field Annotations`
-
-# Consistent id names and variable names. snake_case id names to camelCase variable names
-
-```java
-_googleButton = findById(this, R.id.google_button);
-```
-
-
-# Instead of using IntroActivity.this in an anonymous inner class, use getActivity() (put this method in a superclass)
-
-This makes the code easily portable across activities
-
-# Colors in colors.xml should be uppercase
-
-<color name="colorPrimary">#FF9B00</color>      <!-- Main Toolbar color -->
-
-# Use a color pallete, not a new color for everything.
-
-It's a code smell to have dozens of colors in colors.xml!
-
-# Have a "layout/spacing pallete" button spacing, margins, etc
-
-Be consistent layout margins, button heights, font sizes, etc
-
-# Use `match_parent` instead of `fill_parent` in layouts
-
-They do the same thing, but `match_parent` is the new version, `fill_parent` has been deprecated.
-
-# Break up the res/layouts folder into multiple layouts
-
-# For gradle, avoid using + to specify version in the dependencies block. Use exact version numbers instead.
-
-Using + can lead to build reproducibility problems down the road.
-
-yes:
-`compile 'com.google.code.gson:gson:2.2.3'`
-
-no:
-`compile 'com.google.code.gson:gson:2.2.+'`
-
-# Project Guidelines
-
-# Use Android Studio's default package and folder structure
-
-Put code into a release/ subfolder if it will only ever be used for release
-Put code into a debug/ subfolder if it will ever only be used for debug builds
-Everything else goes in the main subfolder
-Release mode can override classes in the main folder. Do this if you have classes with methods that will change depending on which build flavor you're using
-
-
-# You can override classes by
-
-
-# TODO: Naming convention for layouts, drawables, icons
-
-# TODO: Don't swallow exceptions
-
-# TODO: Class member ordering (constants, fields, constructors, override methods and callbacks, public public methods, privaet methods, inner classes or interfaces
-
-# Use //region description to mark the beginning of a local section of code. Use //endregion to close it.
-
-Android Studio understands these tags to be able to collapse sections of the file
-
-
-# Have order of Android Acitivty callbacks match the lifecycle
-
-```java
-public class MainActivity extends Activity {
-
-    //Order matches Activity lifecycle
-    @Override
-    public void onCreate() {}
-
-    @Override
-    public void onStart() {}
-
-    @Override
-    public void onStop() {}
-
-    @Override
-    public void onResume() {}
-
-    @Override
-    public void onPause() {}
-
-    @Override
-    public void onDestory() {}
-
-}
-```
-
-# Provide a private construtor for non-instantiable Util classes, so they don't generate a default constructor
-
-# Use type inference for generics
-
-yes:
-
-`List<Integer> list = new ArrayList<>();`
-
-no:
-
-`List<Integer> list = new ArrayList<Integer>();`
-
-# BUILD / GRADLE SECTION
-
-# Use build type strings to define the user-visble project name
-
-TODO: or do this in the build.gradle buildTypes like in Fortify?
-
-```
-  src
-    ├── debug
-    │   └── res
-    │       └── buildtype_strings.xml
-    └── release
-      └── res
-            └── buildtype_strings.xml
-```
-
-# Set the app's version in `build.gradle`, NOT in `AndroidManifest.xml`
-
-Put the version information right at the top of the file
-
-# Put `dependency{}` and `compile` statements in the module build.config, NOT in the top level project build.config
-
-# RELEASE SECTION
-
-Put keystore information in a keystore.properties file and read the property file at buildtime
-
-# JAVA SECTION
-
-Parameter ordering - if a `Context` object is being passed in, it comes first.
-if a `Callback` object is being passed in, it comes last.
-
-yes:
-
-```java
-public void getUser(Context context, Callback<User> callback) {
-  ...
-}
-```
-
-# Don't suffix model names with Model
-
-yes:
-`User user = new User();`
-
-no:
-`UserModel user = new UserModel();`
-
-# Use styles.xml rather than specifying lots of duplicated attributes in xml files
-
-# Use retrolambda and lambda syntax for single method interfaces
