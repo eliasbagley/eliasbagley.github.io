@@ -20,7 +20,7 @@ categories: android
 
 Android studio understands these markers and gives you the ability to collapse code inside of them.
 
-## Essential Android Studio Hotkeys
+# Essential Android Studio Hotkeys
 
 - CMD CTRL UPARROW - toggle between Activites/Fragments and layout files.
 
@@ -368,7 +368,7 @@ YES:
 @Override
 public void myMethod() {
 }
-  ```
+```
 
 NO:
 ```java
