@@ -102,6 +102,8 @@ Essential:
 
 - Gson
 
+- Stetho
+
 Nice to have:
 
 - Picasso
