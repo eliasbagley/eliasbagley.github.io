@@ -12,7 +12,7 @@ A MAC address is a unique identifier that network interfaces use to communicate 
 
 Some reasons you might want to change your MAC address include bypassing WiFi paywalls, and for privacy reasons so that routers can't track your computer/network interface between visits. Just incase you forgot your tinfoil hat at home.
 
-Anyways, here's a simple script you can use to automate the process:
+Anyways, here's a simple script you can use to automate the process for OSX:
 
 ```bash
 #!/bin/sh
