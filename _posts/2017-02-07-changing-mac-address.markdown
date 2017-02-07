@@ -6,7 +6,11 @@ comments: true
 categories: shell
 ---
 
-I'm currently in a cafe in Cape Town that only gives free WiFi for one hour, and then makes you pay if you want to continue to use it. You can get around this paywall by simply changing your network interface's MAC address. When you reconnect to the network, it will think you are a new customer and give you an additional hour for free. A MAC address is a unique identifier that network interfaces use to communicate with each other. It's _kinda_ like an IP address, but whereas IP addresses are addresses used to identify hosts and do packet forwarding on the network layer, MAC addresses are used for communication between network interfaces on the data link layer, which is one layer lower on the OSI stack than the network layer.
+I'm currently in a cafe in Cape Town that only gives free WiFi for one hour, and then makes you pay if you want to continue to use it. You can get around this paywall by simply changing your network interface's MAC address. When you reconnect to the network, it will think you are a new customer and give you an additional hour for free.
+
+A MAC address is a unique identifier that network interfaces use to communicate with each other. It's _kinda_ like an IP address, but whereas IP addresses are addresses used to identify hosts and do packet forwarding on the network layer, MAC addresses are used for communication on the data link layer, which is one layer lower on the OSI stack than the network layer.
+
+Some reasons you might want to change your MAC address include bypassing WiFi paywalls, and for privacy reasons so that routers can't track your computer/network interface between visits. Just incase you forgot your tinfoil hat at home.
 
 Anyways, here's a simple script you can use to automate the process:
 
