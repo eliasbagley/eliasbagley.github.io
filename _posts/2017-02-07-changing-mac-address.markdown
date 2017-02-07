@@ -31,9 +31,14 @@ function run() {
   return $return_value
 }
 
+# generate some random bytes, and format it to a mac address of the format ab:ab:ab:ab:ab:ab
 MAC=$(openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//')
 
+# disassociate your current MAC address
 run "sudo /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -z"
+
+# set your new mac address
 run "sudo ifconfig en0 ether $MAC"
+
 run "networksetup -detectnewhardware"
 ```
