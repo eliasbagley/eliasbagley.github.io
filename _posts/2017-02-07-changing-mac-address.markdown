@@ -32,7 +32,7 @@ function run() {
 }
 
 # generate some random bytes, and format it to a mac address of the format ab:ab:ab:ab:ab:ab
-MAC=$(openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//')
+MAC=$(openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/./0/2; s/.$//')
 
 # disassociate your current MAC address
 run "sudo /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -z"
