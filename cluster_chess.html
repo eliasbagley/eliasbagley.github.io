@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stacking Chess (Select Any)</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #2f2f2f;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 { margin-bottom: 5px; }
+        p { margin-top: 0; color: #aaa; font-size: 0.9rem; margin-bottom: 15px; }
+
+        #status {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: #444;
+            border-radius: 5px;
+            border: 1px solid #666;
+            min-width: 250px;
+            text-align: center;
+        }
+
+        #board {
+            display: grid;
+            grid-template-columns: repeat(8, 75px);
+            grid-template-rows: repeat(8, 75px);
+            border: 5px solid #5c4033;
+            user-select: none;
+        }
+
+        .square {
+            width: 75px;
+            height: 75px;
+            position: relative;
+            box-sizing: border-box;
+            /* The square handles clicks for "Moving To" */
+            cursor: pointer;
+        }
+
+        .piece-container {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            justify-items: center;
+            align-items: center;
+        }
+        
+        .count-1 { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+        .count-1 .piece { font-size: 50px; }
+
+        .count-2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; }
+        .count-2 .piece { font-size: 40px; }
+
+        .count-3, .count-4 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+        .count-3 .piece, .count-4 .piece { font-size: 32px; line-height: 32px; }
+
+        .piece { 
+            transition: transform 0.1s; 
+            cursor: pointer; /* Pieces are now clickable */
+            z-index: 2;
+        }
+        
+        /* Hover effect to show which specific piece you are targeting */
+        .piece:hover {
+            transform: scale(1.1);
+        }
+
+        /* Specific selection style */
+        .piece.selected-piece {
+            color: #baca44 !important;
+            text-shadow: 0px 0px 5px #000, 0px 0px 10px #baca44 !important;
+            transform: scale(1.2);
+        }
+
+        /* Board Colors */
+        .light { background-color: #eeeed2; color: black; }
+        .dark { background-color: #769656; color: black; }
+
+        /* Highlights */
+        .valid-move::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 18px;
+            height: 18px;
+            background-color: rgba(0,0,0,0.3);
+            border-radius: 50%;
+            z-index: 1; /* Behind pieces */
+            pointer-events: none;
+        }
+        .valid-move.capture::before {
+            width: 65px;
+            height: 65px;
+            background: transparent;
+            border: 5px solid rgba(0,0,0,0.3);
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            background-color: #769656;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        button:hover { background-color: #5a7540; }
+
+        .thinking { opacity: 0.7; pointer-events: none; }
+
+    </style>
+</head>
+<body>
+
+    <h1>Stacking Chess (Selective)</h1>
+    <p>Stack Limit: 3. Click specific pieces to move them.</p>
+    <div id="status">Turn: White</div>
+    <div id="board"></div>
+    <button onclick="resetGame()">Reset Game</button>
+
+    <script>
+        // --- CONFIGURATION ---
+        const STACK_LIMIT = 4; 
+        const AI_DELAY_MS = 500;
+        // ---------------------
+
+        const boardElement = document.getElementById('board');
+        const statusElement = document.getElementById('status');
+        
+        let board = []; 
+        let currentPlayer = 'white';
+        // Selection now tracks the specific INDEX in the stack
+        let selectedState = null; // { r, c, index, pieceCode }
+        let currentLegalMoves = [];
+        let gameOver = false;
+
+        const pieces = {
+            white: { k: '♔', q: '♕', r: '♖', b: '♗', n: '♘', p: '♙' },
+            black: { k: '♚', q: '♛', r: '♜', b: '♝', n: '♞', p: '♟' }
+        };
+
+        const pieceValues = { p: 10, n: 30, b: 30, r: 50, q: 90, k: 900 };
+
+        function initGame() {
+            const initialMap = [
+                ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'],
+                ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
+                ['', '', '', '', '', '', '', ''],
+                ['', '', '', '', '', '', '', ''],
+                ['', '', '', '', '', '', '', ''],
+                ['', '', '', '', '', '', '', ''],
+                ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
+                ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R']
+            ];
+
+            board = initialMap.map(row => 
+                row.map(code => code === '' ? [] : [code])
+            );
+
+            currentPlayer = 'white';
+            gameOver = false;
+            selectedState = null;
+            currentLegalMoves = [];
+            boardElement.classList.remove('thinking');
+            updateStatus();
+            renderBoard();
+        }
+
+        // --- HELPERS ---
+        function getPieceColor(code) {
+            if (!code) return null;
+            return code === code.toUpperCase() ? 'white' : 'black';
+        }
+
+        function getSquareColor(r, c, boardState) {
+            const stack = boardState[r][c];
+            if (stack.length === 0) return null;
+            return getPieceColor(stack[stack.length - 1]);
+        }
+
+        // --- RENDERING ---
+        function renderBoard() {
+            boardElement.innerHTML = '';
+            
+            for (let r = 0; r < 8; r++) {
+                for (let c = 0; c < 8; c++) {
+                    const square = document.createElement('div');
+                    square.classList.add('square');
+                    square.classList.add((r + c) % 2 === 0 ? 'light' : 'dark');
+                    square.dataset.row = r;
+                    square.dataset.col = c;
+                    
+                    // Destination Click (Square level)
+                    square.addEventListener('click', () => handleSquareClick(r, c));
+
+                    // Render Stack
+                    const stack = board[r][c];
+                    if (stack.length > 0) {
+                        const container = document.createElement('div');
+                        container.classList.add('piece-container');
+                        
+                        if (stack.length === 1) container.classList.add('count-1');
+                        else if (stack.length === 2) container.classList.add('count-2');
+                        else if (stack.length >= 3) container.classList.add('count-3');
+
+                        stack.forEach((code, index) => {
+                            const span = document.createElement('span');
+                            span.classList.add('piece');
+                            const color = getPieceColor(code);
+                            span.textContent = pieces[color][code.toLowerCase()];
+                            span.style.color = color === 'white' ? '#fff' : '#000';
+                            if(color === 'white') span.style.textShadow = "0px 0px 2px #000";
+
+                            // Check if this specific piece is selected
+                            if (selectedState && 
+                                selectedState.r === r && 
+                                selectedState.c === c && 
+                                selectedState.index === index) {
+                                span.classList.add('selected-piece');
+                            }
+
+                            // Selection Click (Piece level)
+                            span.addEventListener('click', (e) => {
+                                handlePieceClick(e, r, c, index, code);
+                            });
+
+                            container.appendChild(span);
+                        });
+                        square.appendChild(container);
+                    }
+
+                    // Move Indicators
+                    const move = currentLegalMoves.find(m => m.r === r && m.c === c);
+                    if (move) {
+                        square.classList.add('valid-move');
+                        if (stack.length > 0) square.classList.add('capture');
+                    }
+
+                    boardElement.appendChild(square);
+                }
+            }
+        }
+
+        // --- INTERACTION ---
+        
+        // 1. Piece Click: Attempts to select a piece
+        function handlePieceClick(e, r, c, index, code) {
+            if (gameOver || currentPlayer === 'black') return;
+
+            const pieceColor = getPieceColor(code);
+
+            // If clicking enemy piece, treat it as clicking the square (Capture target)
+            if (pieceColor !== currentPlayer) {
+                // Let event bubble to handleSquareClick
+                return; 
+            }
+
+            // If clicking friendly piece, STOP bubbling so we don't trigger square logic
+            e.stopPropagation();
+
+            // Select this piece
+            selectedState = { r, c, index, pieceCode: code };
+            currentLegalMoves = getLegalMoves(r, c, code, board);
+            renderBoard();
+        }
+
+        // 2. Square Click: Attempts to move to a square or deselect
+        function handleSquareClick(r, c) {
+            if (gameOver || currentPlayer === 'black') return;
+
+            // If we have a selection, check if this square is a valid move
+            if (selectedState) {
+                const move = currentLegalMoves.find(m => m.r === r && m.c === c);
+                if (move) {
+                    performMove(selectedState, move, board);
+                    return;
+                }
+            }
+
+            // If we clicked an empty square or invalid move, deselect
+            selectedState = null;
+            currentLegalMoves = [];
+            renderBoard();
+        }
+
+        // --- GAME LOGIC ---
+
+        function performMove(fromState, toCoords, boardState, isSimulation = false) {
+            const sourceStack = boardState[fromState.r][fromState.c];
+            
+            // Remove specific piece using splice (not pop!)
+            // We use fromState.index to grab the exact one selected
+            const removedArr = sourceStack.splice(fromState.index, 1); 
+            const movingPiece = removedArr[0];
+
+            const targetStack = boardState[toCoords.r][toCoords.c];
+            const targetColor = getSquareColor(toCoords.r, toCoords.c, boardState);
+
+            let kingCaptured = false;
+
+            // Capture Logic
+            if (targetStack.length > 0 && targetColor !== getPieceColor(movingPiece)) {
+                if (targetStack.some(p => p.toLowerCase() === 'k')) {
+                    kingCaptured = true;
+                }
+                boardState[toCoords.r][toCoords.c] = []; // Clear enemy
+            }
+
+            // Promotion
+            let finalPiece = movingPiece;
+            if (movingPiece === 'P' && toCoords.r === 0) finalPiece = 'Q';
+            if (movingPiece === 'p' && toCoords.r === 7) finalPiece = 'q';
+
+            // Push to new stack
+            boardState[toCoords.r][toCoords.c].push(finalPiece);
+
+            if (!isSimulation) {
+                if (kingCaptured) {
+                    endGame(currentPlayer);
+                } else {
+                    switchTurn();
+                }
+            }
+
+            return kingCaptured;
+        }
+
+        function switchTurn() {
+            currentPlayer = currentPlayer === 'white' ? 'black' : 'white';
+            selectedState = null;
+            currentLegalMoves = [];
+            updateStatus();
+            renderBoard();
+
+            if (currentPlayer === 'black') {
+                boardElement.classList.add('thinking');
+                setTimeout(makeAIMove, AI_DELAY_MS);
+            } else {
+                boardElement.classList.remove('thinking');
+            }
+        }
+
+        function endGame(winner) {
+            gameOver = true;
+            statusElement.textContent = `${winner.toUpperCase()} WINS!`;
+            statusElement.style.background = winner === 'white' ? "#eee" : "#333";
+            statusElement.style.color = winner === 'white' ? "#000" : "#fff";
+            boardElement.classList.remove('thinking');
+        }
+
+        function updateStatus() {
+            if (!gameOver) {
+                statusElement.textContent = `Turn: ${currentPlayer.charAt(0).toUpperCase() + currentPlayer.slice(1)}`;
+            }
+        }
+
+        // --- MOVE GENERATION ---
+        function getLegalMoves(r, c, code, boardState) {
+            let moves = [];
+            const type = code.toLowerCase();
+            const color = getPieceColor(code);
+            const opponent = color === 'white' ? 'black' : 'white';
+            const onBoard = (r, c) => r >= 0 && r < 8 && c >= 0 && c < 8;
+
+            const isValidTarget = (tr, tc) => {
+                const stack = boardState[tr][tc];
+                if (stack.length === 0) return true; 
+                const topColor = getPieceColor(stack[stack.length - 1]);
+                if (topColor === opponent) return true; 
+                if (topColor === color && stack.length < STACK_LIMIT) return true; 
+                return false; 
+            };
+
+            const shouldStop = (tr, tc) => {
+                const stack = boardState[tr][tc];
+                return stack.length > 0;
+            };
+
+            const addSlidingMoves = (dirs) => {
+                dirs.forEach(d => {
+                    let nr = r + d[0];
+                    let nc = c + d[1];
+                    while (onBoard(nr, nc)) {
+                        if (isValidTarget(nr, nc)) moves.push({r: nr, c: nc});
+                        if (shouldStop(nr, nc)) break;
+                        nr += d[0];
+                        nc += d[1];
+                    }
+                });
+            };
+
+            if (type === 'p') {
+                const dir = color === 'white' ? -1 : 1;
+                const startRow = color === 'white' ? 6 : 1;
+                
+                // Forward
+                if (onBoard(r + dir, c)) {
+                    const tStack = boardState[r + dir][c];
+                    const isFriend = tStack.length > 0 && getPieceColor(tStack[tStack.length-1]) === color;
+                    const isEmpty = tStack.length === 0;
+
+                    if (isEmpty || (isFriend && tStack.length < STACK_LIMIT)) {
+                        moves.push({r: r + dir, c: c});
+                        if (r === startRow && isEmpty && boardState[r + dir * 2][c].length === 0) {
+                            moves.push({r: r + dir * 2, c: c});
+                        }
+                    }
+                }
+                // Capture
+                [[dir, -1], [dir, 1]].forEach(d => {
+                    const nr = r + d[0];
+                    const nc = c + d[1];
+                    if (onBoard(nr, nc)) {
+                        const tStack = boardState[nr][nc];
+                        if (tStack.length > 0) {
+                            const tColor = getPieceColor(tStack[tStack.length-1]);
+                            if (tColor === opponent) moves.push({r: nr, c: nc});
+                        }
+                    }
+                });
+            }
+
+            if (type === 'n' || type === 'k') {
+                const mArr = type === 'n' 
+                    ? [[2,1], [2,-1], [-2,1], [-2,-1], [1,2], [1,-2], [-1,2], [-1,-2]]
+                    : [[1,0], [-1,0], [0,1], [0,-1], [1,1], [1,-1], [-1,1], [-1,-1]];
+                
+                mArr.forEach(m => {
+                    const nr = r + m[0];
+                    const nc = c + m[1];
+                    if (onBoard(nr, nc) && isValidTarget(nr, nc)) moves.push({r: nr, c: nc});
+                });
+            }
+
+            if (type === 'r') addSlidingMoves([[1,0], [-1,0], [0,1], [0,-1]]);
+            if (type === 'b') addSlidingMoves([[1,1], [1,-1], [-1,1], [-1,-1]]);
+            if (type === 'q') addSlidingMoves([[1,0], [-1,0], [0,1], [0,-1], [1,1], [1,-1], [-1,1], [-1,-1]]);
+
+            return moves;
+        }
+
+        // --- AI (Iterates All Pieces) ---
+
+        function makeAIMove() {
+            if (gameOver) return;
+
+            const allMoves = [];
+            // Scan board
+            for (let r = 0; r < 8; r++) {
+                for (let c = 0; c < 8; c++) {
+                    const stack = board[r][c];
+                    // IMPORTANT: AI checks EVERY piece in the stack, not just top
+                    stack.forEach((piece, index) => {
+                        if (getPieceColor(piece) === 'black') {
+                            const moves = getLegalMoves(r, c, piece, board);
+                            moves.forEach(m => {
+                                allMoves.push({ 
+                                    from: {r, c, index, pieceCode: piece}, 
+                                    to: m 
+                                });
+                            });
+                        }
+                    });
+                }
+            }
+
+            if (allMoves.length === 0) {
+                endGame('white'); 
+                return;
+            }
+
+            let bestScore = -Infinity;
+            let bestMoves = [];
+
+            allMoves.forEach(move => {
+                // Deep clone (expensive but safe for simple AI)
+                const clone = JSON.parse(JSON.stringify(board));
+                
+                // Simulate Move
+                const killedKing = performMove(move.from, move.to, clone, true);
+                
+                let score = 0;
+                if (killedKing) {
+                    score = 10000;
+                } else {
+                    score = evaluateBoard(clone);
+                }
+
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestMoves = [move];
+                } else if (score === bestScore) {
+                    bestMoves.push(move);
+                }
+            });
+
+            const choice = bestMoves[Math.floor(Math.random() * bestMoves.length)];
+            
+            // Re-calculate index just to be safe (though index shouldn't change during calc)
+            // Actually, performMove relies on the index being valid for the CURRENT board state.
+            // Since AI is single threaded and board didn't change, the index in `choice.from.index` is valid.
+            performMove(choice.from, choice.to, board);
+        }
+
+        function evaluateBoard(b) {
+            let score = 0;
+            for (let r = 0; r < 8; r++) {
+                for (let c = 0; c < 8; c++) {
+                    const stack = b[r][c];
+                    stack.forEach(p => {
+                        const val = pieceValues[p.toLowerCase()] || 0;
+                        if (getPieceColor(p) === 'black') score += val;
+                        else score -= val;
+                    });
+                }
+            }
+            return score;
+        }
+
+        function resetGame() {
+            initGame();
+        }
+
+        initGame();
+
+    </script>
+</body>
+</html>
